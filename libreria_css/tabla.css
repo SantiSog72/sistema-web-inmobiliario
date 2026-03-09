@@ -1,0 +1,20 @@
+
+table{
+	margin: auto 0px;
+	text-align: center;
+	border: ridge 3px black;
+	color: black;
+}
+
+th{
+	text-transform:capitalize;
+}
+
+td, th {
+	border: solid 1px black;
+	padding: 1rem;
+}
+
+td, table{
+	border-collapse: collapse;
+}

@@ -1,0 +1,86 @@
+
+
+.contenedor_formulario{
+	display:flex;
+	justify-content:center;
+}
+
+.formulario{
+	/* margin:  0px auto; */
+	padding: 1.5rem;
+}
+
+.fieldset{
+	display: flex;
+	margin-bottom:1rem;
+	flex-wrap:wrap;
+}
+
+.field_acciones{
+	justify-content:center;
+}
+
+.legend{
+	text-transform:capitalize;
+}
+
+.form_grupo, .contenedor_checkbox_radio{
+	margin-left: 1rem; 	
+	margin-bottom: 0.5rem; 	
+}
+
+.form_grupo{
+	display:flex;
+	/* display:block; */
+	flex-direction:column;
+	gap: 0.5rem;	
+	/* width:100%; */
+}
+
+.contenedor_checkbox_radio{
+}
+
+.contenedor_checkbox_radio > *{
+	margin-bottom:5px;	
+}
+
+.textarea {
+	width: 95%;
+}
+
+.boton, .label, .titulo_de_contenedor{
+	text-transform:capitalize;
+}
+
+
+
+.select, .fecha {
+	/* width: 100px; */
+	/* min-width: 100px; */
+	/* max-width:100%; */
+}
+
+.label, .titulo_de_contenedor{
+	margin-bottom:5px;
+	margin: 0px;
+}
+
+.titulo_de_contenedor{
+}
+
+.boton {
+	margin-right: 0.5rem;
+}
+
+.error{
+	color: #e74c3c;
+	font-size: 0.870rem;
+	font-style:italic;
+	margin-top: 4px;
+}
+
+.a_boton {
+	text-decoration:none;
+	color:black;
+}
+
