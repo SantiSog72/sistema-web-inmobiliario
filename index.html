@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="autor" content="Santiago Servin">
+<meta name="description" content="Pagina principal">
+
+<script type="text/javascript" src ="javascript/index.js"></script>
+<script type="text/javascript" src ="../../libreria_javascript/Validacion.js"></script>
+
+<link rel="stylesheet" href="VISTA/css//index.css">
+<link rel="stylesheet" href="VISTA/css/formulario_estilos.css">
+<link rel="stylesheet" href="VISTA/css//index.css">
+
+<title>Sistema Informacion Inmoviliaria</title>
+</head>
+
+<body>
+	<header>
+	<h1>Sistema Informacion Inmoviliaria</h1>
+	
+	</header>
+	<main>
+		<section id="id_filtros_busqueda">
+			<form id="formulario_busqueda">
+				<fieldset class="fieldset">
+
+					<span class="form_grupo">
+					<label class ="label" for ="id_tipo_operacion">Tipo Operacion</label>
+					<select class="select" id="id_tipo_operacion" name="operacion" size="1">
+						<option class="option" value="-"selected>sin filtro</option>
+						<option class="option" value="alquiler">alquiler</option>
+						<option class="option" value="alquiler_amoblado">Alquiler Amueblado</option>
+						<option class="option" value="venta">venta</option>
+					</select>
+					<span id="error_tipo_operacion" class="error"></span>
+					</span>	
+
+					<span class="form_grupo">
+					<label class ="label" for ="id_tipo_propiedad">Tipo Propiedad</label>
+					<select class="select" id="id_tipo_propiedad" name="propiedad" size="1">
+						<option class="option" value="-"selected>sin filtro</option>
+						<option class="option" value="casa">casa</option>
+						<option class="option" value="departamento">departamento</option>
+						<option class="option" value="oficina">oficina</option>
+						<option class="option" value="terreno">terreno</option>
+						<option class="option" value="cochera">cochera</option>
+					</select>
+					<span id="error_tipo_propiedad" class="error"></span>
+					</span>	
+
+					<span class="form_grupo">
+					<label class ="label" for ="id_tipo_propiedad">Ubicacion</label>
+					<select class="select" id="id_tipo_propiedad" name="propiedad" size="1">
+						<option class="option" value="-"selected>sin filtro</option>
+						<option class="option" value="casa">casa</option>
+						<option class="option" value="departamento">departamento</option>
+						<option class="option" value="oficina">oficina</option>
+						<option class="option" value="terreno">terreno</option>
+						<option class="option" value="cochera">cochera</option>
+					</select>
+					<span id="error_tipo_propiedad" class="error"></span>
+					</span>	
+
+					<span class="form_grupo">
+						<label class="label" for="id_ubicacion">Ubicación</label>
+						<select class="select" id="id_ubicacion" name="ubicacion" size="1">
+							<option class="option" value="-" selected>sin filtro</option>
+							<option class="option" value="zona_norte">Zona Norte</option>
+							<option class="option" value="zona_sur">Zona Sur</option>
+							<option class="option" value="zona_centro">Zona Centro</option>
+							<option class="option" value="rada_tilly">Rada Tilly</option>
+						</select>
+						<span id="error_ubicacion" class="error"></span>
+					</span>
+
+					<span class="contenedor_checkbox_radio">
+						<p class="titulo_de_contenedor">otras caracteristicas</p>
+						<input class="checkbox" type="checkbox" name="quincho" value="1">
+						<label class="label">quincho</label><br>
+						<input class="checkbox" type="checkbox" name="garage" value="1">
+						<label class="label">garage</label><br>
+						<input class="checkbox" type="checkbox" name="lavadero" value="1">
+						<label class="label">lavadero</label><br>
+						<input class="checkbox" type="checkbox" name="patio" value="1">
+						<label class="label">patio</label><br>
+						<span id="error_opciones" class="error"></span>
+					</span>
+					
+					<span class="form_grupo">
+						<button  id="id_buscar">buscar</button>
+						<button  id="id_limpiar">quitar filtros y restaura resultados</button>
+					</span>
+				</fieldset>
+
+				<fieldset class="fieldset" name="">
+				</fieldset>
+
+			</form> 
+		</section>
+
+		<section class="id_resultados_busqueda">
+
+		</section>
+	</main>
+	<footer>
+	<div id="descripcion_pagina">
+		<p>autor: <span class="autor">Santiago Servin</span></p>
+		<p>Final Libre 2026</p>		
+	</div>
+	</footer>
+	
+</body>
+
+</html>
