@@ -12,6 +12,10 @@ class Inmueble {
     const COCHERA= 4;
     const TERRENO= 5;
 
+    private int $nro_inmueble;
+    private int $tipo_propiedad;
+    private string $descripcion;
+    private array $otras_caracteristicas;
 	private array $fotos;
 	private Ubicacion $ubicacion;
 

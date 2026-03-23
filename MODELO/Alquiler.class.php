@@ -1,13 +1,14 @@
 <?php
-include_once 'Operacion.class.php'
+require_once 'Operacion.class.php';
 
 class Alquiler extends Operacion {
     
     private int $plazo; //meses
     private array $lista_registros_pago;
 
-    public function __construct ($nro_operacion, $precio, $disponibilidad){
-        parent::_construct ($nro_operacion, $precio, $disponibilidad)
+
+    public function __construct ($nro_operacion, $titulo_publicacion, $precio, $disponibilidad, $inmueble, $lista_registros_pago, $plazo){
+        parent::__construct ($nro_operacion, $titulo_publicacion, $precio, $disponibilidad, $inmueble);
         $this -> plazo = $plazo;
         $this -> lista_registros_pago = $lista_registros_pago;
     }

@@ -13,7 +13,7 @@ class Contacto {
 	}
 
     public function getNombreContacto (){
-		return $this -> nro_celular;
+		return $this -> nombre_contacto;
 	}
 	
 	public function getNro_celular (){
