@@ -6,6 +6,7 @@ abstract class Operacion {
     private string $titulo_publicacion;
     private int $precio;
     private bool $disponibilidad;
+    private Inmueble $inmueble;
 
 
     public function __construct ($nro_operacion, $titulo_publicacion, $precio, $disponibilidad, $inmueble){

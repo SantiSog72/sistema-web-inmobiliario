@@ -5,15 +5,15 @@ require_once 'Ubicacion.class.php';
 
 class Inmueble {
 	
-    // tipo propiedad
-    const DEPARTAMENTO = 1;
-    const CASA = 2;
-    const OFICINA = 3;
-    const COCHERA= 4;
-    const TERRENO= 5;
+    // // tipo propiedad
+    // const DEPARTAMENTO = 1;
+    // const CASA = 2;
+    // const OFICINA = 3;
+    // const COCHERA= 4;
+    // const TERRENO= 5;
 
     private int $nro_inmueble;
-    private int $tipo_propiedad;
+    private string $tipo_propiedad;
     private string $descripcion;
     private array $otras_caracteristicas;
 	private array $fotos;

@@ -9,7 +9,7 @@ class Ubicacion {
 
     private int $nro_ubicacion;
     private string $direccion;
-    private int $zona;
+    private string $zona;
     private string $coordenadas;
 
     public function __construct ($nro_ubicacion, $direccion, $zona, $coordenadas){
@@ -32,23 +32,20 @@ class Ubicacion {
         return $this->coordenadas;
     }
 
-    public function get_zona_texto() { 
-        $nombre_zona;
-        switch($this -> zona){
-            case'1':
-                $nombre_zona = "Zona Norte";
-                break;
-            case'2':
-                $nombre_zona = "Zona Sur";
-                break;
-            case'3':
-                $nombre_zona = "Zona Centro";
-                break;
-            case'4':
-                $nombre_zona = "Rada Tylli";
-                break;
-        }
-        return $nombre_zona;
+    public function get_zona_texto() {
+    switch($this->zona) {
+        // números — cuando se crea desde el controlador hardcodeado
+        case 1: return "Zona Norte";
+        case 2: return "Zona Sur";
+        case 3: return "Zona Centro";
+        case 4: return "Rada Tilly";
+        // strings — cuando viene de la BD
+        case 'zona_norte':  return "Zona Norte";
+        case 'zona_sur':    return "Zona Sur";
+        case 'zona_centro': return "Zona Centro";
+        case 'rada_tilly':  return "Rada Tilly";
+        default: return $this->zona;
     }
+}
 }
 ?>

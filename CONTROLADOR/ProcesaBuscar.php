@@ -1,7 +1,9 @@
 <?php
-
-require_once __DIR__ . '/ControladorCatalogo.class.php';
-include_once __DIR__ . '/../libreria_php/verFormulario.php';
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+}
+require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
+// // include_once BASE_PATH.'libreria_php/verFormulario.php';
 
 
 //transformadores de entrada ( de la GIU a datos procesables por la logica)
@@ -83,7 +85,7 @@ function Convertir_tipo_propiedad(){
 // }
 
 
-//recibe el formulario de busqueda
+// //recibe el formulario de busqueda
 
 $controladorCatalogo = new ControladorCatalogo ();
 $catalogo_completo = $controladorCatalogo -> get_lista_catalogo();
@@ -103,33 +105,32 @@ if (isset($_GET['operacion']) || isset($_GET['zona'])) {
 }
 
 $datos_json = [];
-foreach ($catalogo_a_procesar as $operacion) {
-    $inmueble = $operacion->get_inmueble();
-    $datos_json[] = [
-        "titulo" => $operacion->get_titulo_publicacion(),
-        "zona"   => $inmueble->get_ubicacion()->get_zona_texto(),
-        "tipo"   => ($operacion instanceof Venta) ? "Venta" : "Alquiler",
-        "precio" => $operacion->get_precio(),
-        "id"     => $inmueble->get_nro_inmueble()
-    ];
+if (is_array($catalogo_a_procesar)){
+    foreach ($catalogo_a_procesar as $operacion) {
+        $inmueble = $operacion->get_inmueble();
+        $datos_json[] = [
+            "titulo" => $operacion->get_titulo_publicacion(),
+            "zona"   => $inmueble->get_ubicacion()->get_zona_texto(),
+            "tipo"   => ($operacion instanceof Venta) ? "Venta" : "Alquiler",
+            "precio" => $operacion->get_precio(),
+            "id"     => $inmueble->get_nro_inmueble()
+        ];
+    }
 }
 
-// ... después del bucle foreach ...
+// // ... después del bucle foreach ...
 
 // 1. Definimos la cabecera para que el navegador sepa que es JSON
 header('Content-Type: application/json');
-
 // 2. "Echamos" (imprimimos) el JSON. 
 // Si $datos_json está vacío, imprimirá "[]", que es un JSON válido.
 echo json_encode($datos_json);
-
 // 3. Importante: Terminamos la ejecución para que no se cuele 
 // ningún espacio o HTML extra después.
 exit;
 
 
 
-// mostrar_info_formulario();
+// // mostrar_info_formulario();
 
 ?>
-

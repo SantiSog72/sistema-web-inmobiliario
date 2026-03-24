@@ -1,5 +1,13 @@
 <?php
-require_once 'CONTROLADOR/ControladorCatalogo.class.php';
+// Define la ruta base del proyecto
+define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
+
+require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
+// $ControladorCatalogo = new ControladorCatalogo();
+// $catalogo = $ControladorCatalogo -> get_lista_catalogo();
+// echo "<pre>";
+// var_dump($catalogo);
+// echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -113,10 +121,10 @@ require_once 'CONTROLADOR/ControladorCatalogo.class.php';
 					<span class="form_grupo">
 						<label class ="label" for ="id_zona">Zona</label>
 						<select class="select" id="id_zona" name="zona" size="1">
-							<option class="option" value="Zona_Norte">Zona Norte</option>
-							<option class="option" value="Zona_Sur">Zona Sur</option>
-							<option class="option" value="Zona_Centro" selected>Zona Centro</option>
-							<option class="option" value="Rada_Tilly">Rada Tilly</option>
+							<option class="option" value="zona_norte">Zona Norte</option>
+							<option class="option" value="zona_sur">Zona Sur</option>
+							<option class="option" value="zona_centro" selected>Zona Centro</option>
+							<option class="option" value="rada_tilly">Rada Tilly</option>
 						</select>
 						<span id="error_Zona" class="error"></span>
 					</span>
