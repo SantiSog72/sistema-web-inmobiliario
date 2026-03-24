@@ -55,11 +55,11 @@ function Convertir_otras_caracteristicas() {
 
 function Convertir_tipo_propiedad(){
     $lista_procesable = [];
-    if (isset($_GET['casa'])){$lista_procesable[] = Inmueble::CASA;}        
-    if (isset($_GET['departamento'])){$lista_procesable[] = Inmueble::DEPARTAMENTO;}
-    if (isset($_GET['oficina'])){$lista_procesable[] = Inmueble::OFICINA;}       
-    if (isset($_GET['terreno'])){$lista_procesable[] = Inmueble::TERRENO;}       
-    if (isset($_GET['cochera'])){$lista_procesable[] = Inmueble::COCHERA;}       
+    if (isset($_GET['casa'])){$lista_procesable[] = "casa";}        
+    if (isset($_GET['departamento'])){$lista_procesable[] = "departamento";}
+    if (isset($_GET['oficina'])){$lista_procesable[] = "oficina";}       
+    if (isset($_GET['terreno'])){$lista_procesable[] = "terreno";}       
+    if (isset($_GET['cochera'])){$lista_procesable[] = "cochera";}       
     
     return $lista_procesable;
 }
@@ -94,8 +94,8 @@ $catalogo_completo = $controladorCatalogo -> get_lista_catalogo();
 // Decidimos qué catálogo usar
 if (isset($_GET['operacion']) || isset($_GET['zona'])) {
     $catalogo_a_procesar = $controladorCatalogo->filtra_operaciones(
-        Convertir_tipo_operacion($_GET['operacion']),
-        Convertir_zona($_GET['zona']),
+        $_GET['operacion'],//falta amoblado
+        $_GET['zona'],
         Convertir_tipo_propiedad(),
         Convertir_otras_caracteristicas()
     );

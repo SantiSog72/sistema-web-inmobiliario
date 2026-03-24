@@ -6,11 +6,11 @@ require_once 'Ubicacion.class.php';
 class Inmueble {
 	
     // // tipo propiedad
-    // const DEPARTAMENTO = 1;
-    // const CASA = 2;
-    // const OFICINA = 3;
-    // const COCHERA= 4;
-    // const TERRENO= 5;
+    const DEPARTAMENTO = "departamento";
+    const CASA = "casa";
+    const OFICINA = "oficina";
+    const COCHERA= "cochera";
+    const TERRENO= "terreno";
 
     private int $nro_inmueble;
     private string $tipo_propiedad;

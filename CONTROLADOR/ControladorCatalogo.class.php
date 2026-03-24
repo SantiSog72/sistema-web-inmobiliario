@@ -101,8 +101,14 @@ class ControladorCatalogo {
         $inmueble = $operacion->get_inmueble();
 
         // true si no hay filtro, o si cumple el filtro
-        $cumple_operacion = ($tipo_operacion == null || $operacion instanceof $tipo_operacion);
-
+        // $cumple_operacion = ($tipo_operacion == null || $operacion instanceof $tipo_operacion);
+        $cumple_operacion = (
+            $tipo_operacion == null ||
+            $tipo_operacion == "alquiler" && $operacion instanceof Alquiler ||
+            $tipo_operacion == "alquiler_amoblado" && $operacion instanceof Alquiler && $operacion -> get_esta_amoblado() ||
+            $tipo_operacion == "venta" && $operacion instanceof Venta
+         );
+        
         $cumple_zona = ($zona == null || $inmueble->get_ubicacion()->get_zona() == $zona);
 
         $cumple_propiedad = (empty($lista_tipo_propiedad) || 
