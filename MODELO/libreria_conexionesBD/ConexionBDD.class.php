@@ -70,7 +70,6 @@ class ConexionBDD {
         return $lista;
     }
 
-
     public function obtener_fotos($nro_inmueble) {
         $consulta = $this->conexion->prepare("
             SELECT nro_foto, nombre_foto, path
@@ -105,6 +104,10 @@ class ConexionBDD {
         }
         $resultado->free();
         return $lista;
+    }
+
+    public function ingresar_operacion ($operacion){
+        
     }
 
 	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		

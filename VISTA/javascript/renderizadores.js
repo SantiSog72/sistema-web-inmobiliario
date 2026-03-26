@@ -63,3 +63,8 @@ function renderizarMasInfo(item) {
     `;
     agregar_elemento_despues_de(htmlMasInfo, item.id_operacion);
 }
+
+// function renderizarLista_fotos_alta_operacion (lista_fotos){
+//     limpiar_contenedor('lista_nombres');
+
+// }

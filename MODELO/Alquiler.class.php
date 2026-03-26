@@ -15,6 +15,7 @@ class Alquiler extends Operacion {
     }
 
     public function get_plazo() { return $this->plazo; }
+    public function set_plazo($plazo) { $this->plazo = $plazo; }
     public function get_esta_amoblado() { return $this->esta_amoblado; }
     public function get_lista_registros_pago() { return $this->lista_registros_pago; }
 }

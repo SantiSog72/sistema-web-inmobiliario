@@ -80,7 +80,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 					const operacion_selecionada = lista_catalogo.find(item =>item.id_operacion == idOperacion);
 					if (operacion_selecionada){
 						// console.log(idOperacion);
-						console.log(JSON.stringify(operacion_selecionada, null, 2));
+						// console.log(JSON.stringify(operacion_selecionada, null, 2));
 						renderizarMasInfo(operacion_selecionada);
 					}else{
 						console.log("no se encontro la operacion");
@@ -107,7 +107,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <body> 
 	<header>
 	<h1>Sistema Informacion Inmoviliaria</h1>
-	
+	<a href="VISTA/Alta_operacion.php">alta operacion</a>
 	</header>
 	
 	<main>

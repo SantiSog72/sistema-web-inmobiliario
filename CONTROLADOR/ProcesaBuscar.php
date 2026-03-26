@@ -34,7 +34,7 @@ $catalogo_completo = $controladorCatalogo -> get_lista_catalogo();
 // Decidimos qué catálogo usar
 if (isset($_GET['operacion']) || isset($_GET['zona'])) {
     $catalogo_a_procesar = $controladorCatalogo->filtra_operaciones(
-        $_GET['operacion'],//falta amoblado
+        $_GET['operacion'],
         $_GET['zona'],
         Convertir_tipo_propiedad(),
         Convertir_otras_caracteristicas()
@@ -91,7 +91,8 @@ if (is_array($catalogo_a_procesar)){
                 "tipo_propiedad" => $inmueble->get_tipo_propiedad(),
                 "descripcion"    => $inmueble->get_descripcion(),
                 "ubicacion"      => [
-                    "coordenadas" => $inmueble->get_ubicacion()->get_coordenadas(),
+                    "coordenadas_latitud" => $inmueble->get_ubicacion()->get_coordenadas_latitud(),
+                    "coordenadas_longitud" => $inmueble->get_ubicacion()->get_coordenadas_longitud(),
                     "zona"        => $inmueble->get_ubicacion()->get_zona_texto(),
                     "direccion"   => $inmueble->get_ubicacion()->get_direccion(),
                 ],

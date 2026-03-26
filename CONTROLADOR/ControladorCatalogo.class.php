@@ -30,7 +30,8 @@ class ControladorCatalogo {
                 $fila['nro_inmueble'],
                 $fila['direccion'],
                 $fila['zona'],
-                $fila['cord_latitud'] . "," . $fila['cord_longitud']
+                $fila['cord_latitud'],
+                $fila['cord_longitud']
             );
             $inmueble = new Inmueble(
                 $fila['nro_inmueble'],
@@ -72,7 +73,8 @@ class ControladorCatalogo {
                 $fila['nro_inmueble'],
                 $fila['direccion'],
                 $fila['zona'],
-                $fila['cord_latitud'] . "," . $fila['cord_longitud']
+                $fila['cord_latitud'],
+                $fila['cord_longitud']
             );
             $inmueble = new Inmueble(
                 $fila['nro_inmueble'],

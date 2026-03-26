@@ -10,13 +10,17 @@ class Ubicacion {
     private int $nro_ubicacion;
     private string $direccion;
     private string $zona;
-    private string $coordenadas;
+    private string $coordenadas_latitud;
+    private string $coordenadas_longitud;
+        
+    
 
-    public function __construct ($nro_ubicacion, $direccion, $zona, $coordenadas){
+    public function __construct ($nro_ubicacion, $direccion, $zona, $coordenadas_latitud, $coordenadas_longitud){
         $this -> nro_ubicacion = $nro_ubicacion;
         $this -> direccion = $direccion;
         $this -> zona = $zona;
-        $this -> coordenadas = $coordenadas;
+        $this -> coordenadas_latitud = $coordenadas_latitud;
+        $this -> coordenadas_longitud = $coordenadas_longitud;
     }
 
     public function get_nro_ubicacion() { 
@@ -28,8 +32,11 @@ class Ubicacion {
     public function get_zona() { 
         return $this->zona;
     }
-    public function get_coordenadas() { 
-        return $this->coordenadas;
+    public function get_coordenadas_latitud() { 
+        return $this->coordenadas_latitud;
+    }
+    public function get_coordenadas_longitud() { 
+        return $this->coordenadas_longitud;
     }
 
     public function get_zona_texto() {
