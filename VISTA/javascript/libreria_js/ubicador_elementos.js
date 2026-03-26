@@ -25,4 +25,35 @@ function agregar_elemento_inicio(html, id_contenedor){
 		
 	}
 }
+function agregar_elemento_despues_de(html, id_elemento) {
+    let elementoReferencia = document.getElementById(id_elemento);
+    if (elementoReferencia) {
+        // ingresa como siguiente
+        elementoReferencia.insertAdjacentHTML("afterend", html);
+    }
+}
+
+function agregar_elemento_antes_de(html, id_elemento) {
+    let elementoReferencia = document.getElementById(id_elemento);
+    if (elementoReferencia) {
+        // ingresa como anterior
+        elementoReferencia.insertAdjacentHTML("beforebegin", html);
+    }
+}
+
+function eliminar_elementos_de(class_elementos_a_eliminar, id_contenedor) {
+    let contenedor = document.getElementById(id_contenedor);
+    if (contenedor) {
+        // Buscamos todos los elementos con esa clase SOLO dentro del contenedor
+        let elementos = contenedor.querySelectorAll("." + class_elementos_a_eliminar);
+        
+        elementos.forEach(elemento => {
+            elemento.remove(); // Borra cada uno del DOM
+        });
+    }
+}
+
+function eliminar_elementos_global(clase) {
+    document.querySelectorAll("." + clase).forEach(el => el.remove());
+}
 

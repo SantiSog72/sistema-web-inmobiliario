@@ -3,46 +3,7 @@ if (!defined('BASE_PATH')) {
     define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 }
 require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
-// // include_once BASE_PATH.'libreria_php/verFormulario.php';
-
-
-//transformadores de entrada ( de la GIU a datos procesables por la logica)
-function Convertir_tipo_operacion ($valor_ingresado){
-    switch ($valor_ingresado){
-        case "alquiler":
-                return "Alquiler";
-            break;
-        case "alquiler_amoblado":
-            return "AlquilerAmoblado";
-            break;
-        case "venta":
-            return "Venta";
-            break;
-        default:
-            return null;
-            break;
-    }
-}
-
-function Convertir_zona($valor_ingresado){
-    switch($valor_ingresado){
-        case "Zona_Norte":
-            return Ubicacion::ZONA_NORTE;
-            break;
-        case "Zona_Sur":
-            return Ubicacion::ZONA_SUR;
-            break;
-        case "Zona_Centro":
-            return Ubicacion::ZONA_CENTRO;
-            break;
-        case "Rada_Tilly":
-            return Ubicacion::RADA_TILLY;
-            break;
-        default:
-            return null;
-            break;
-    }
-}
+// include_once BASE_PATH.'libreria_php/verFormulario.php';
 
 function Convertir_otras_caracteristicas() {
     return [
@@ -65,28 +26,7 @@ function Convertir_tipo_propiedad(){
 }
 
 
-// function catalogo_to_tarjetasHTML($catalogo) {
-//     $html = "";
-    
-//     foreach ($catalogo as $operacion) {
-//         $inmueble = $operacion->get_inmueble();
-//         $html .= "<div class=\"tarjeta_operacion\">";
-//         $html .= "<p>" .
-//             $operacion->get_titulo_publicacion() . " " .
-//             $inmueble->get_ubicacion()->get_zona_texto() . " " .
-//             (($operacion instanceof Venta) ? "venta " : "alquiler ") .
-//             $operacion->get_precio() . "$(arg) " .
-//         "</p>";
-//         $html .= "<button class=\"boton\" type=\"button\">más info</button>";
-//         $html .= "</div>";
-//     }
-    
-//     return $html;
-// }
-
-
-// //recibe el formulario de busqueda
-
+//recibe el formulario de busqueda
 $controladorCatalogo = new ControladorCatalogo ();
 $catalogo_completo = $controladorCatalogo -> get_lista_catalogo();
 // En lugar de: if (isset($_GET['operacion']) || isset($_GET['zona']))
@@ -108,13 +48,61 @@ $datos_json = [];
 if (is_array($catalogo_a_procesar)){
     foreach ($catalogo_a_procesar as $operacion) {
         $inmueble = $operacion->get_inmueble();
-        $datos_json[] = [
-            "titulo" => $operacion->get_titulo_publicacion(),
-            "zona"   => $inmueble->get_ubicacion()->get_zona_texto(),
-            "tipo"   => ($operacion instanceof Venta) ? "Venta" : "Alquiler",
-            "precio" => $operacion->get_precio(),
-            "id"     => $inmueble->get_nro_inmueble()
+
+        // 1. Convertir fotos a array
+        $fotos_array = [];
+        foreach ($inmueble->get_fotos() as $foto) {
+            $fotos_array[] = [
+                "nro_foto"    => $foto->get_numero_foto(),
+                "descripcion" => $foto->get_descripcion_foto(),
+                "path"        => $foto->get_path_foto()
+            ];
+        }
+
+        // 2. Definir atributos según la instancia
+        $atributos_unicos = [];
+        if ($operacion instanceof Alquiler){
+            $atributos_unicos = [
+                "plazo"         => $operacion->get_plazo(),
+                "esta_amoblado" => $operacion->get_esta_amoblado()
+            ];
+        } elseif ($operacion instanceof Venta){
+            $opciones_financiacion =[];
+            foreach($operacion -> get_opcion_financiacion() as $opcion){
+                $opciones_financiacion []= [
+                    "cod_financiacion"             => $opcion -> get_cod_financiacion(),
+                    "titulo_opcion_financiacion"   => $opcion -> get_titulo_opcion_financiacion()
+                ];
+            }
+            $atributos_unicos = [
+                "apto_credito" => $operacion->get_apto_credito_hipotecario(),
+                "financiacion" => $opciones_financiacion, 
+            ];
+        }
+
+        // 3. Armamos el bloque base
+        $bloque_base = [
+            "titulo"       => $operacion->get_titulo_publicacion(),
+            "id_operacion" => $operacion->get_nro_operacion(),
+            "tipo"         => ($operacion instanceof Venta) ? "Venta" : "Alquiler",
+            "precio"       => $operacion->get_precio(),
+            "inmueble"     => [
+                "nro_inmueble"   => $inmueble->get_nro_inmueble(),
+                "tipo_propiedad" => $inmueble->get_tipo_propiedad(),
+                "descripcion"    => $inmueble->get_descripcion(),
+                "ubicacion"      => [
+                    "coordenadas" => $inmueble->get_ubicacion()->get_coordenadas(),
+                    "zona"        => $inmueble->get_ubicacion()->get_zona_texto(),
+                    "direccion"   => $inmueble->get_ubicacion()->get_direccion(),
+                ],
+                "otras_caracteristicas" => $inmueble->get_otras_caracteristicas(),
+                "lista_fotos" => $fotos_array
+            ]
         ];
+
+        // 4. COMBINAMOS TODO
+        // array_merge une los dos arrays en uno solo
+        $datos_json[] = array_merge($bloque_base, $atributos_unicos);
     }
 }
 

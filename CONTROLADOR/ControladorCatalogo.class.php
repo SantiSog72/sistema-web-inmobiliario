@@ -10,6 +10,7 @@ require_once BASE_PATH.'MODELO/Ubicacion.class.php';
 require_once BASE_PATH.'MODELO/Operacion.class.php';
 require_once BASE_PATH.'MODELO/Alquiler.class.php';
 require_once BASE_PATH.'MODELO/Venta.class.php';
+require_once BASE_PATH.'MODELO/Opcion_financiacion.class.php';
 require_once BASE_PATH.'MODELO/libreria_conexionesBD/ConexionBDD.class.php';
 
 class ControladorCatalogo {
@@ -60,6 +61,13 @@ class ControladorCatalogo {
             foreach ($bd->obtener_fotos($fila['nro_inmueble']) as $f) {
                 $fotos[] = new Foto($f['nro_foto'], $f['nombre_foto'], $f['path']);
             }
+
+            $opciones_financiacion = [];
+            foreach ($bd -> obtener_opciones_financiacion($fila['nro_operacion']) as $f){
+                $opciones_financiacion [] = new Opcion_financiacion(
+                    $f['cod_financiacion'], 
+                    $f['titulo_opcion_financiacion']);
+            }
             $ubicacion = new Ubicacion(
                 $fila['nro_inmueble'],
                 $fila['direccion'],
@@ -83,7 +91,7 @@ class ControladorCatalogo {
                 $fila['precio'],
                 $fila['disponibilidad'],
                 $inmueble,
-                $fila['opcion_financiacion'],
+                $opciones_financiacion,
                 $fila['apto_credito_hipotecario']
             );
         }

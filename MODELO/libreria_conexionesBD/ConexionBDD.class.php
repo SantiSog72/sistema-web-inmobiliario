@@ -70,6 +70,7 @@ class ConexionBDD {
         return $lista;
     }
 
+
     public function obtener_fotos($nro_inmueble) {
         $consulta = $this->conexion->prepare("
             SELECT nro_foto, nombre_foto, path
@@ -77,6 +78,25 @@ class ConexionBDD {
             WHERE nro_inmueble = ?
         ");
         $consulta->bind_param("i", $nro_inmueble);//relaciona $nro_inmueble con ? y le indica que es de tipo integer (i)
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $lista = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $lista[] = $fila;
+        }
+        $resultado->free();
+        return $lista;
+    }
+
+    public function obtener_opciones_financiacion($nro_operacion) {
+        $consulta = $this->conexion->prepare("
+            SELECT rfv.nro_operacion, o.cod_financiacion, o.titulo_opcion_financiacion
+            FROM r_financiacion_venta rfv 
+            NATURAL JOIN opcion_financiacion o 
+            WHERE nro_operacion = ?
+            ORDER BY (rfv.nro_operacion)
+        ");
+        $consulta->bind_param("i", $nro_operacion);//relaciona $nro_operacion con ? y le indica que es de tipo integer (i)
         $consulta->execute();
         $resultado = $consulta->get_result();
         $lista = [];

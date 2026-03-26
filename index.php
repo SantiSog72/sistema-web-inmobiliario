@@ -24,7 +24,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
 		const formulario = document.getElementById('id_formulario_busqueda');
-		const contenedor = 'id_contenedor_catalogo';
+		const contenedor = document.getElementById('id_contenedor_catalogo');
 
 		// 1. Función para obtener y mostrar datos
 		async function cargarCatalogo(parametros = "") {
@@ -38,11 +38,15 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 				//se recibe la respuesta y se la castea objeto json
 				const lista_inmuebles = await respuesta.json();
 				// console.log (lista_inmuebles);
+
+				//guarda catalogo en local storage, primero combierte el json en string
+				localStorage.setItem("catalogo_actual", JSON.stringify(lista_inmuebles));
+
 				
 				renderizarTarjetasJSON(lista_inmuebles);
 			} catch (error) {
 				console.error("Error al cargar el catálogo:", error);
-				document.getElementById(contenedor).innerHTML = "<p>Error al cargar los datos.</p>";
+				contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
 			}
 		}
 
@@ -60,33 +64,36 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 		});
 
 		formulario.addEventListener('reset', async function(){
+			localStorage.removeItem("catalogo_actual");
 			cargarCatalogo();
 		})
+
+		//evento del mas-info
+		contenedor.addEventListener("click", function(evento){
+			if (evento.target.classList.contains('boton_mas_info')) {
+                const idOperacion = evento.target.getAttribute('data-id'); //id del objeto que se guardo en el boton
+				//busca en local storage
+				const lista_catalogo_str = localStorage.getItem("catalogo_actual");
+				if (lista_catalogo_str){
+					const lista_catalogo = JSON.parse(lista_catalogo_str);
+					//busca el objeto a expandir
+					const operacion_selecionada = lista_catalogo.find(item =>item.id_operacion == idOperacion);
+					if (operacion_selecionada){
+						// console.log(idOperacion);
+						console.log(JSON.stringify(operacion_selecionada, null, 2));
+						renderizarMasInfo(operacion_selecionada);
+					}else{
+						console.log("no se encontro la operacion");
+					}
+				}else{
+					console.log("no se encontro catalogo en local storage");
+				}
+                
+            }
+		})
+
+
 	});
-	// document.addEventListener('DOMContentLoaded', function (){//DOMContentLoaded: para que cargue html primero
-	// 	let formulario = document.getElementById('id_formulario_busqueda');
-	// 	formulario.addEventListener('submit', async function(evento){
-	// 		evento.preventDefault();//evita que se envie el formulario
-	
-	// 		const datos = new FormData(formulario);//toma los datos del fomrulario
-	// 		// console.log("datos:");
-	// 		// console.log(datos);
-	// 		const params = new URLSearchParams (datos).toString();
-	// 		// console.log("parametros: ");
-	// 		// console.log(params);
-			
-	// 		const respuesta = await fetch('CONTROLADOR/ProcesaBuscar.php?' + params);
-	// 		// console.log("respuesta: ");
-	// 		// console.log(respuesta);
-	// 		const lista_inmuebles = await respuesta.json();
-	// 		// console.log("html:");
-	// 		// console.log(html);
-			
-	// 		renderizarTarjetasJSON(lista_inmuebles);
-	
-	// 	})
-	// })
-	
 
 </script>
 
