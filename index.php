@@ -16,10 +16,12 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina principal">
 
-<!-- <script type="text/javascript" src ="javascript/index.js"></script> -->
+<!-- <script type="text/javascript" src ="https:/maps.googleapis.com/maps/api/"></script> -->
 <script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
 <script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
-<!-- <script type="text/javascript" src ="../../libreria_javascript/Validacion.js"></script> -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
@@ -99,7 +101,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 
 <link rel="stylesheet" href="VISTA/css//index.css">
 <link rel="stylesheet" href="VISTA/css/formulario_estilos.css">
-<link rel="stylesheet" href="VISTA/css//index.css">
+<!-- <link rel="stylesheet" href="VISTA/css//mapas.css"> -->
 
 <title>Sistema Informacion Inmoviliaria</title>
 </head>
@@ -107,13 +109,26 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <body> 
 	<header>
 	<h1>Sistema Informacion Inmoviliaria</h1>
-	<a href="VISTA/Alta_operacion.php">alta operacion</a>
+	<nav class="contenedor_mapa">
+		<a href="VISTA/Alta_operacion.php">alta operacion</a>
+		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa Catalogo Completo</button>
+		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
+	</nav>
+
+	<p>cantidad de visitas: </p>
+	<p>ultima visita: </p>
 	</header>
+
+	<div id="id_mapa_div">
+
+
+	</div>
 	
 	<main>
 		<section id="id_filtros_busqueda">
 			<form id="id_formulario_busqueda" name="formulario_busqueda" method="GET">
 				<fieldset class="fieldset contenedor_formulario">
+					<legend class="legend">buscar inmuebles</legend>
 
 					<span class="form_grupo">
 					<label class ="label" for ="id_tipo_operacion">Tipo Operacion</label>
