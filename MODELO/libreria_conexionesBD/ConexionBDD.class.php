@@ -29,7 +29,7 @@ class ConexionBDD {
 
     public function obtener_alquileres() {
         $consulta = $this->conexion->prepare("
-            SELECT a.nro_operacion, a.titulo_publicacion, a.precio, a.disponibilidad, a.esta_amoblado, a.opcion_financiacion, a.plazo,
+            SELECT a.nro_operacion, a.titulo_publicacion, a.precio, a.disponibilidad, a.esta_amoblado, a.plazo,
                    i.nro_inmueble, i.tipo_propiedad, i.descripcion,
                    i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
                    i.cord_latitud, i.cord_longitud, i.direccion, i.zona
@@ -48,9 +48,10 @@ class ConexionBDD {
         return $lista;
     }
 
+    
     public function obtener_ventas() {
         $consulta = $this->conexion->prepare("
-            SELECT v.nro_operacion, v.titulo_publicacion, v.precio, v.disponibilidad, v.opcion_financiacion, 
+            SELECT v.nro_operacion, v.titulo_publicacion, v.precio, v.disponibilidad, 
                    v.apto_credito_hipotecario,
                    i.nro_inmueble, i.tipo_propiedad, i.descripcion,
                    i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
@@ -69,11 +70,11 @@ class ConexionBDD {
         $resultado->free();
         return $lista;
     }
-
+    
     public function obtener_fotos($nro_inmueble) {
         $consulta = $this->conexion->prepare("
-            SELECT nro_foto, nombre_foto, path
-            FROM foto
+        SELECT nro_foto, nombre_foto, path
+        FROM foto
             WHERE nro_inmueble = ?
         ");
         $consulta->bind_param("i", $nro_inmueble);//relaciona $nro_inmueble con ? y le indica que es de tipo integer (i)
@@ -106,10 +107,122 @@ class ConexionBDD {
         return $lista;
     }
 
-    public function ingresar_operacion ($operacion){
-        
+    public function ingresar_inmueble($inmueble) {
+        $consulta = $this->conexion->prepare("
+        INSERT INTO inmueble 
+        (tipo_propiedad, descripcion, con_quincho, con_lavadero, 
+        con_patio, con_garage, cord_latitud, cord_longitud, direccion, zona)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $caract    = $inmueble->get_otras_caracteristicas();
+        $tipo      = $inmueble->get_tipo_propiedad();
+        $desc      = $inmueble->get_descripcion();
+        $quincho   = $caract['quincho'];
+        $lavadero  = $caract['lavadero'];
+        $patio     = $caract['patio'];
+        $garage    = $caract['garage'];
+        $lat       = $inmueble->get_ubicacion()->get_coordenadas_latitud();
+        $lng       = $inmueble->get_ubicacion()->get_coordenadas_longitud();
+        $direccion = $inmueble->get_ubicacion()->get_direccion();
+        $zona      = $inmueble->get_ubicacion()->get_zona();
+
+        $consulta->bind_param("ssiiiissss",
+            $tipo, $desc, $quincho, $lavadero, $patio, $garage,
+            $lat, $lng, $direccion, $zona
+        );
+        $consulta->execute();
+        return $this->conexion->insert_id;
     }
 
+    public function ingresar_fotos($fotos, $nro_inmueble) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO foto (nombre_foto, path, nro_inmueble)
+            VALUES (?, ?, ?)
+        ");
+        foreach ($fotos as $foto) {
+            $nombre = $foto->get_descripcion_foto();
+            $path   = $foto->get_path_foto();
+            $consulta->bind_param("ssi", $nombre, $path, $nro_inmueble);
+            $consulta->execute();
+        }
+    }
+
+    public function ingresar_alquiler($alquiler, $nro_inmueble) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO alquiler 
+                (nro_inmueble, titulo_publicacion, precio, disponibilidad, 
+                esta_amoblado, plazo)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        $titulo     = $alquiler->get_titulo_publicacion();
+        $precio     = $alquiler->get_precio();
+        $disponible = 1;
+        $amoblado   = $alquiler->get_esta_amoblado() ? 1 : 0;
+        $plazo      = $alquiler->get_plazo();
+
+        $consulta->bind_param("isiiii",
+            $nro_inmueble, $titulo, $precio, $disponible, $amoblado, $plazo
+        );
+        $consulta->execute();
+        return $this->conexion->insert_id;
+    }
+
+    public function ingresar_venta($venta, $nro_inmueble) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO venta 
+                (nro_inmueble, titulo_publicacion, precio, disponibilidad, 
+                apto_credito_hipotecario)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $titulo     = $venta->get_titulo_publicacion();
+        $precio     = $venta->get_precio();
+        $disponible = 1;
+        $apto       = $venta->get_apto_credito_hipotecario() ? 1 : 0;
+
+        $consulta->bind_param("isiii",
+            $nro_inmueble, $titulo, $precio, $disponible, $apto
+        );
+        $consulta->execute();
+        return $this->conexion->insert_id;
+    }
+
+    public function ingresar_opciones_financiacion($nro_operacion, $opciones) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO r_financiacion_venta (nro_operacion, cod_financiacion)
+            VALUES (?, ?)
+        ");
+        foreach ($opciones as $opcion) {
+            $cod = $opcion->get_cod_financiacion();
+            $consulta->bind_param("is", $nro_operacion, $cod);
+            $consulta->execute();
+        }
+    }
+
+    public function obtener_todas_opciones_financiacion() {
+        $consulta = $this->conexion->prepare("
+            SELECT cod_financiacion, titulo_opcion_financiacion 
+            FROM opcion_financiacion
+        ");
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $lista = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $lista[] = new Opcion_financiacion(
+                $fila['cod_financiacion'],
+                $fila['titulo_opcion_financiacion']
+            );
+        }
+        $resultado->free();
+        return $lista;
+    }
+    
+    public function borrar_inmueble ($nro_inmueble){
+        $consulta= $this -> conexion -> prepare("
+            DELETE FROM inmueble i WHERE i.nro_inmueble = ?
+        ");
+        $consulta -> bind_param('i',$nro_inmueble);
+        $consulta -> execute();
+    }
 	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		
 	// 	$query = "INSERT INTO usuario (email, contraseña, nombre, apellido, sexo, fecha_nacimiento, numero_celular, dni)";
 	// 	$query .= "VALUES ('".$email."','".$contraseña."','".$nombre."','".$apellido."','".$sexo."','".$fecha_nacimiento."','".$nro_celular."','".$dni."')";

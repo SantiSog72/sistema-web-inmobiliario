@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     $ubicacion = new Ubicacion(
-        $_POST['nro_inmueble'],
+        0,
         $_POST['direccion_inmueble'],
         $_POST['zona'],
         $_POST['coordenadas_longitud_inmueble'],
@@ -59,14 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     );
     
     $inmueble = new Inmueble(
-        $_POST['nro_inmueble'],
+        0,
         $_POST['tipo_propiedad'],
-        $_POST['descripcion'],
+        $_POST['descripcion_inmueble'],
         [
-            'quincho' => $_POST['quincho'],
-            'lavadero' => $_POST['lavadero'],
-            'patio' => $_POST['patio'],
-            'garage' => $_POST['garage'],
+            'quincho' => isset($_POST['quincho']),
+            'lavadero' => isset($_POST['lavadero']),
+            'patio' => isset ($_POST['patio']),
+            'garage' => isset ($_POST['garage']),
         ],
         $lista_objetos_fotos,
         $ubicacion
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_POST['plazo'],
             false
         );
-        if ($_POST['operacion'] = "alquiler_amoblado"){
+        if ($_POST['operacion'] == "alquiler_amoblado"){
             $operacion -> set_plazo(true);
         }
     }else{
@@ -102,13 +102,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 
-header('Content-Type: application/json');
-echo json_encode([
-    "estado" => "ok",
-    "mensaje" => "Operación creada",
-    "detalle" => $operacion // Asegúrate de que tus clases tengan propiedades públicas o implementen JsonSerializable
-]);
-exit;
+$conexion = ConexionBDD::getInstancia();
+$nro_inmueble = $conexion -> ingresar_inmueble($operacion -> get_inmueble());
+$conexion -> ingresar_fotos($operacion -> get_inmueble() -> get_fotos(), $nro_inmueble);
+if ($operacion instanceof Alquiler){
+    $id_operacion = $conexion -> ingresar_alquiler($operacion, $nro_inmueble);
+}elseif ($operacion instanceof Venta){
+    $id_operacion = $conexion -> ingresar_venta($operacion, $nro_inmueble);
+    $conexion -> ingresar_opciones_financiacion($id_operacion, $operacion -> get_opcion_financiacion());
+}
+
+
+
+print_r($operacion);
+
+// header('Content-Type: application/json');
+// echo json_encode([
+//     "estado" => "ok",
+//     "mensaje" => "Operación creada",
+//     "detalle" => $operacion // Asegúrate de que tus clases tengan propiedades públicas o implementen JsonSerializable
+// ]);
+// exit;
 
 
 

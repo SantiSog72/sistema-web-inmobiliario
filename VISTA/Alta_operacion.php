@@ -16,6 +16,34 @@
 		const formulario = document.getElementById('id_formulario_registro_operacion');
 		const fotos = document.getElementById('id_fotos');
 
+
+        // carga opciones de financiacion al iniciar
+        async function cargar_opciones_financiacion() {
+            const respuesta = await fetch('../CONTROLADOR/ObtenerOpcionesFinanciacion.php');
+            const opciones  = await respuesta.json();
+
+            const contenedor = document.getElementById('contenedor_opciones_financiacion');
+
+            opciones.forEach(opcion => {
+                const label = document.createElement('label');
+                label.classList.add('label');
+
+                const checkbox = document.createElement('input');
+                checkbox.type  = 'checkbox';
+                checkbox.name  = 'opciones_financiacion[]'; // array para recibir múltiples
+                checkbox.value = opcion.cod;
+                checkbox.classList.add('checkbox');
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(' ' + opcion.titulo));
+
+                contenedor.appendChild(label);
+                contenedor.appendChild(document.createElement('br'));
+            });
+        }
+
+        cargar_opciones_financiacion();
+
 		fotos.addEventListener('change', function(e) {
             const listaUl = document.getElementById('lista_nombres');
             listaUl.innerHTML = ''; // Limpiar la lista previa
@@ -37,67 +65,42 @@
         });
 
 		//CARGA POR BÚSQUEDA: Se ejecuta al enviar el formulario
-		formulario.addEventListener('submit', async function(evento) {
-            evento.preventDefault(); // Evita la recarga de la página
+		// formulario.addEventListener('submit', async function(evento) {
+        //     evento.preventDefault(); // Evita la recarga de la página
 
-            // 1. Recolectamos TODOS los datos (incluye archivos)
-            const datos = new FormData(formulario);
+        //     // 1. Recolectamos TODOS los datos (incluye archivos)
+        //     const datos = new FormData(formulario);
 
-            try {
-                // 2. Enviamos los datos al servidor mediante fetch
-                const respuesta = await fetch('ProcesaAltaOperacion.php', {
-                    method: 'POST',
-                    body: datos // Enviamos el FormData directamente
-                });
+        //     try {
+        //         // 2. Enviamos los datos al servidor mediante fetch
+        //         const respuesta = await fetch('../CONTROLADOR/ProcesaAltaOperacion.php', {//argumentos
+        //             method: 'POST',
+        //             body: datos // Enviamos el FormData directamente
+        //         });
 
-                // 3. Verificamos la respuesta
-                if (respuesta.ok) {
-                    const resultado = await respuesta.text(); // O .json() si tu PHP devuelve JSON
-                    console.log("Servidor dice:", resultado);
-                    alert("Operación procesada con éxito");
+        //         // 3. Verificamos la respuesta
+        //         if (respuesta.ok) {
+        //             const resultado = await respuesta.text(); // O .json() si tu PHP devuelve JSON
+        //             console.log("Servidor dice:", resultado);
+        //             alert("Operación procesada con éxito");
                     
-                    // Opcional: limpiar el formulario tras el éxito
-                    // formulario.reset();
-                    // document.getElementById('lista_nombres').innerHTML = '<li>Aun no hay archivos seleccionados.</li>';
-                } else {
-                    console.error("Error en el servidor:", respuesta.status);
-                    alert("Hubo un error al procesar el formulario.");
-                }
-            } catch (error) {
-                console.error("Error de red o conexión:", error);
-                alert("No se pudo conectar con el servidor.");
-            }
-        });
-
-		formulario.addEventListener('reset', async function(){
-			// localStorage.removeItem("catalogo_actual");
-			// cargarCatalogo();
-		})
-
-		// //evento del mas-info
-		// contenedor.addEventListener("click", function(evento){
-		// 	if (evento.target.classList.contains('boton_mas_info')) {
-        //         const idOperacion = evento.target.getAttribute('data-id'); //id del objeto que se guardo en el boton
-		// 		//busca en local storage
-		// 		const lista_catalogo_str = localStorage.getItem("catalogo_actual");
-		// 		if (lista_catalogo_str){
-		// 			const lista_catalogo = JSON.parse(lista_catalogo_str);
-		// 			//busca el objeto a expandir
-		// 			const operacion_selecionada = lista_catalogo.find(item =>item.id_operacion == idOperacion);
-		// 			if (operacion_selecionada){
-		// 				// console.log(idOperacion);
-		// 				console.log(JSON.stringify(operacion_selecionada, null, 2));
-		// 				renderizarMasInfo(operacion_selecionada);
-		// 			}else{
-		// 				console.log("no se encontro la operacion");
-		// 			}
-		// 		}else{
-		// 			console.log("no se encontro catalogo en local storage");
-		// 		}
-                
+        //             // Opcional: limpiar el formulario tras el éxito
+        //             // formulario.reset();
+        //             // document.getElementById('lista_nombres').innerHTML = '<li>Aun no hay archivos seleccionados.</li>';
+        //         } else {
+        //             console.error("Error en el servidor:", respuesta.status);
+        //             alert("Hubo un error al procesar el formulario.");
+        //         }
+        //     } catch (error) {
+        //         console.error("Error de red o conexión:", error);
+        //         alert("No se pudo conectar con el servidor.");
         //     }
-		// })
+        // });
 
+		// formulario.addEventListener('reset', async function(){
+		// 	// localStorage.removeItem("catalogo_actual");
+		// 	// cargarCatalogo();
+		// })
 
 	});
 
@@ -116,14 +119,14 @@
 	</header>
 	<section>
 		<article class= "contenedor_formulario">
-			<form id="id_formulario_registro_operacion" class "formulario" name="formulario_registro_operacion" method="POST" enctype="multipart/form-data">
+			<form id="id_formulario_registro_operacion" class "formulario" name="formulario_registro_operacion" method="POST" enctype="multipart/form-data" action="../CONTROLADOR/ProcesaAltaOperacion.php">
 
                 <fieldset class = "fieldset" name="datos de la operacion">
                     <legend class = "legend" >Datos de la Operacion</legend>
 
                     <span class="form_grupo">
                         <label class="label" for="id_titulo_publicacion">Título Publicación: </label>                   
-                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación">
+                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
                         <span id="error_titulo_publicacion" class="error"></span>
                     </span>
 
@@ -139,27 +142,27 @@
                     
                     <span class="form_grupo">
                         <label class="label" for="id_precio">Precio: </label>                   
-                        <input id="id_precio" type="number" name="precio" placeholder="Ingrese el precio">
+                        <input id="id_precio" type="number" name="precio" placeholder="Ingrese el precio" value=12345678>
                         <span id="error_precio" class="error"></span>
                     </span>
 
                     <!-- unicos de Alquiler -->
                     <span class="form_grupo">
                         <label class="label" for="id_plazo">Plazo (en meses): </label>                   
-                        <input id="id_plazo" type="number" name="plazo" placeholder="Ingrese el plazo en meses">
+                        <input id="id_plazo" type="number" name="plazo" placeholder="Ingrese el plazo en meses" value=24>
                         <span id="error_plazo" class="error"></span>
                     </span>
 
                     <!-- unicos de Venta -->
-                    <span class="contenedor_checkbox_radio">
-						<p class="titulo_de_contenedor">Opciones Financiacion</p>
-						<!-- carga las opciones de financiacion disponibles en BDD -->
-						<span id="error_tipo_propiedad" class="error"></span>
-					</span>
+                    <span class="contenedor_checkbox_radio" id="contenedor_opciones_financiacion">
+                        <p class="titulo_de_contenedor">Opciones Financiacion</p>
+                        <!-- se cargan dinámicamente -->
+                        <span id="error_opciones_financiacion" class="error"></span>
+                    </span>
 
                     <span class="contenedor_checkbox_radio">
 						<!-- <p class="titulo_de_contenedor">Apto para credito hipotecario</p> -->
-						<input class="checkbox" type="checkbox" name="apto_credito_hipotecario" value="1">
+						<input class="checkbox" type="checkbox" name="apto_credito_hipotecario" value="1" checked>
 						<label class="label">Apto para credito hipotecario</label><br>
                     </span>
                     
@@ -182,18 +185,18 @@
 
                     <span class="form_grupo">
                         <label class="label" for="id_descripcion_inmueble">Descripción: </label> 
-                        <textarea id="id_descripcion_inmueble" type="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4"></textarea>                  
+                        <textarea id="id_descripcion_inmueble" type="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4" >departamento 5 hoala como estas estso es una descripcion</textarea>                  
                         <!-- <input id="id_descripcion_inmueble" type="text-area" name="descripcion_inmueble" maxlength="500" placeholder="Ingrese la descripción del inmueble"> -->
                         <span id="error_descripcion_inmueble" class="error"></span>
                     </span>
 
                     <span class="contenedor_checkbox_radio">
                         <p class="titulo_de_contenedor">otras caracteristicas</p>
-                        <input class="checkbox" type="checkbox" name="quincho" value="1">
+                        <input class="checkbox" type="checkbox" name="quincho" value="1" checked>
                         <label class="label">quincho</label><br>
                         <input class="checkbox" type="checkbox" name="garage" value="1">
                         <label class="label">garage</label><br>
-                        <input class="checkbox" type="checkbox" name="lavadero" value="1">
+                        <input class="checkbox" type="checkbox" name="lavadero" value="1"checked>
                         <label class="label">lavadero</label><br>
                         <input class="checkbox" type="checkbox" name="patio" value="1">
                         <label class="label">patio</label><br>
@@ -219,14 +222,14 @@
 
                     <span class="form_grupo">
                         <label class="label" for="id_direccion">Direccion: </label>                   
-                        <input id="id_direccion" type="text" name="direccion_inmueble" placeholder="Ingrese la direccion del inmueble">
+                        <input id="id_direccion" type="text" name="direccion_inmueble" placeholder="Ingrese la direccion del inmueble" value="calle 123">
                     <span id="error_direccion_inmueble" class="error"></span>
 
                     <span class="form_grupo">
                         <label class="label" for="id_coordenadas_longitud">coordenadas longitud: </label>                   
-                        <input id="id_coordenadas_longitud" type="text" name="coordenadas_longitud_inmueble" placeholder="Ingrese la coordenadas_longitud del inmueble">
+                        <input id="id_coordenadas_longitud" type="text" name="coordenadas_longitud_inmueble" value ="123" placeholder="Ingrese la coordenadas_longitud del inmueble">
                         <label class="label" for="id_coordenadas_longitud">coordenadas latitud: </label>                   
-                        <input id="id_coordenadas_latitud" type="text" name="coordenadas_latitud_inmueble" placeholder="Ingrese la coordenadas_latitud del inmueble">
+                        <input id="id_coordenadas_latitud" type="text" name="coordenadas_latitud_inmueble" value="456" placeholder="Ingrese la coordenadas_latitud del inmueble">
                     <span id="error_coordenadas_inmueble" class="error"></span>
 
                 </fieldset>
@@ -251,7 +254,7 @@
 				
 				<fieldset class = "fieldset" name="acciones_botones">
 					<legend class = "legend" >acciones</legend>		
-					<button id="id_envio" class="boton" type ="submit" onclick = "validar_formulario();">crear publicacion</button>
+					<button id="id_envio" class="boton" type ="submit">crear publicacion</button>
 					<button id="id_cancelar" class="boton" type ="reset">cancelar</button>
 				</fieldset>
 				

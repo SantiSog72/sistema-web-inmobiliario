@@ -39,7 +39,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 				const lista_inmuebles = await respuesta.json();
 				// console.log (lista_inmuebles);
 
-				//guarda catalogo en local storage, primero combierte el json en string
+				//combierte el json en string, luego guarda catalogo en local storage
 				localStorage.setItem("catalogo_actual", JSON.stringify(lista_inmuebles));
 
 				
