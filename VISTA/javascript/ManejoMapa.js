@@ -3,19 +3,19 @@ var mapa_actual = null;
 const id_contenedor_mapa = "id_mapa_div";
 
 function iniciar_mapa_inmuebles(){
+    
+    var latCentro = -45.862237; 
+    var lngCentro = -67.518005;
+    generoMapa(latCentro, lngCentro, 12);
+}
+
+function generoMapa(lat, lng, zoom) {
     var contenedor_mapa = document.getElementById(id_contenedor_mapa);
     contenedor_mapa.style.height= "500px";
     contenedor_mapa.style.width= "100%";
     contenedor_mapa.style.borderRadius="20px";
-
-    var latCentro = -45.862237; 
-    var lngCentro = -67.518005;
-    generoMapa(latCentro, lngCentro);
-}
-
-function generoMapa(lat, lng) {
     // 1. Inicializar el mapa
-    mapa_actual = L.map(id_contenedor_mapa).setView([lat, lng], 12);
+    mapa_actual = L.map(id_contenedor_mapa).setView([lat, lng], zoom);
 
     // 2. Cargar la capa de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -53,11 +53,6 @@ function crearMarcadores() {
     }
 }
 
-function muestraError(error) {
-    console.error("Error de geolocalización:", error);
-    alert("No se pudo obtener la ubicación: " + error.message);
-}
-
 function ocultarMapa(){
     if (mapa_actual){
         mapa_actual.remove();
@@ -67,4 +62,24 @@ function ocultarMapa(){
         contenedor_mapa.style.width= "0px";
     }
 
+}
+
+function accederMapaCoordenadas($lat_inmueble_seleccionado, $lng_inmueble_seleccionado){
+
+    if (mapa_actual){
+        mapa_actual.remove();
+    }
+    contenedor_mapa = document.getElementById(id_contenedor_mapa);
+    if (contenedor_mapa) {
+        contenedor_mapa.scrollIntoView({ 
+            behavior: 'smooth', // Hace que el movimiento sea fluido y no un salto brusco
+            block: 'start'      // Alinea el div en la parte superior de la pantalla
+        });
+    }
+    generoMapa($lat_inmueble_seleccionado, $lng_inmueble_seleccionado, 18);
+}
+
+function muestraError(error) {
+    console.error("Error de geolocalización:", error);
+    alert("No se pudo obtener la ubicación: " + error.message);
 }

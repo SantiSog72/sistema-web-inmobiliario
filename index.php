@@ -18,10 +18,10 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 
 <!-- <script type="text/javascript" src ="https:/maps.googleapis.com/maps/api/"></script> -->
 <script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina

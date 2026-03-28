@@ -35,7 +35,7 @@ function renderizarMasInfo(item) {
             <p>${item.inmueble.descripcion}</p>
             <p>Zona: ${item.inmueble.ubicacion.zona} </p>
             <p>Direccion: ${item.inmueble.ubicacion.direccion}</p>
-            <button id="id_boton_ver_en_el_mapa" action="">ver en el mapa</button>
+            <button id="id_boton_ver_en_el_mapa" onclick="accederMapaCoordenadas(${item.inmueble.ubicacion.coordenadas_latitud}, ${item.inmueble.ubicacion.coordenadas_longitud});">ver en el mapa</button>
             ${item.tipo === 'Venta' ? `
                 <div class="seccion_venta">
                     <p>Apto crédito hipotecario: ${item.apto_credito ? 'Sí' : 'No'}</p>
@@ -59,6 +59,8 @@ function renderizarMasInfo(item) {
                     <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.descripcion}" onclick="">
                 `).join(''):"El inmueble no tiene fotos"}
             </div>
+
+            <button class="buton">contactar dueño</button>
         </div>
     `;
     agregar_elemento_despues_de(htmlMasInfo, item.id_operacion);
