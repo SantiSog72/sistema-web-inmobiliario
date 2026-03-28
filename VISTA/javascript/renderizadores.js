@@ -9,15 +9,15 @@ function renderizarTarjetasJSON(listaInmuebles) {
     //array de objetos JSON
     listaInmuebles.forEach(item => {
         // Armar tarjeta 
-        //se guarda el id del objeto
+        //se guarda el id del objeto y el tipo (se requieren los dos para identificar una operacion)
         const htmlTarjeta = `
-            <div id="${item.id_operacion}" class="tarjeta_operacion">
+            <div id="${item.id_operacion},${item.tipo}" class="tarjeta_operacion">
                 <p>
                     ${item.titulo} - 
                     <strong>${item.inmueble.ubicacion.zona}</strong> - 
                     ${item.tipo}: $${item.precio}
                 </p>
-                <button class="boton boton_mas_info" type="button" data-id="${item.id_operacion}" >más info</button>
+                <button class="boton boton_mas_info" type="button" data-id="${item.id_operacion},${item.tipo}" >más info</button>
             </div>
         `;
         
@@ -27,7 +27,8 @@ function renderizarTarjetasJSON(listaInmuebles) {
 
 
 function renderizarMasInfo(item) {
-    elemento_a_expandir = document.getElementById(item.id); //la etiqueta tiene el id de su objeto
+    // elemento_a_expandir = document.getElementById(item.id_operacion); //la etiqueta tiene el id de su objeto
+    id_contenedor=`${item.id_operacion},${item.tipo}`;
     const htmlMasInfo = `
         <div class="mas_info">
             <h3>${item.titulo} - ${item.tipo}</h3>
@@ -63,7 +64,7 @@ function renderizarMasInfo(item) {
             <button class="buton">contactar dueño</button>
         </div>
     `;
-    agregar_elemento_despues_de(htmlMasInfo, item.id_operacion);
+    agregar_elemento_despues_de(htmlMasInfo, id_contenedor);
 }
 
 // function renderizarLista_fotos_alta_operacion (lista_fotos){
