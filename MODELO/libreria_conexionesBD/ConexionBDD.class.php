@@ -8,6 +8,8 @@ require_once BASE_PATH.'MODELO/Ubicacion.class.php';
 require_once BASE_PATH.'MODELO/Operacion.class.php';
 require_once BASE_PATH.'MODELO/Alquiler.class.php';
 require_once BASE_PATH.'MODELO/Venta.class.php';
+require_once BASE_PATH.'MODELO/Contacto.class.php';
+require_once BASE_PATH.'MODELO/UsuarioAdministrador.class.php';
 
 class ConexionBDD {
     // singleton
@@ -105,6 +107,54 @@ class ConexionBDD {
         }
         $resultado->free();
         return $lista;
+    }
+
+    public function obtener_usuarios() {
+        $consulta = $this->conexion->prepare("
+            SELECT dni, contrasena, nombre, apellido, nro_celular, email 
+            FROM usuario_administrador
+        ");
+        $consulta->execute();
+        $resultado = $consulta->get_result();
+        $lista = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $lista[] = $fila;
+        }
+
+        $resultado->free();
+        return $lista;
+    }
+
+    public function ingresar_usuario(UsuarioAdministrador $usuario) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO usuario_administrador 
+            (dni, contrasena, nombre, apellido, nro_celular, email)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+
+        $dni      = $usuario->get_dni();
+        $pass     = $usuario->get_contrasena();
+        $nombre   = $usuario->get_nombre();
+        $apellido = $usuario->get_apellido();
+
+        $contacto = $usuario->get_contacto();
+        $celular  = $contacto->getNro_celular();
+        $email    = $contacto->getEmail();
+
+        $consulta->bind_param("ssssss", 
+            $dni, 
+            $pass, 
+            $nombre, 
+            $apellido, 
+            $celular, 
+            $email
+        );
+
+        if ($consulta->execute()) {
+            return true; 
+        } else {
+            return false;
+        }
     }
 
     public function ingresar_inmueble($inmueble) {

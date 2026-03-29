@@ -22,11 +22,15 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>
 <script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/libreria_js/Cookies.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/botones_hipervinculo.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
 		const formulario = document.getElementById('id_formulario_busqueda');
 		const contenedor = document.getElementById('id_contenedor_catalogo');
+
+		cargo_cookies();
 
 		// 1. Función para obtener y mostrar datos
 		async function cargarCatalogo(parametros = "") {
@@ -118,12 +122,14 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 	<h1>Sistema Informacion Inmoviliaria</h1>
 	<nav class="contenedor_mapa">
 		<a href="VISTA/Alta_operacion.php">alta operacion</a>
+		<button class= "boton" onclick="ir_singIn();">Iniciar sesion</button>
+		<button class= "boton" onclick="ir_singUp();">registrarse</button>
 		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa Catalogo Completo</button>
 		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
 	</nav>
 
-	<p>cantidad de visitas: </p>
-	<p>ultima visita: </p>
+	<p id="id_visitas"></p>
+	<p id ="id_fecha_ultimo_acceso"></p>
 	</header>
 
 	<div id="id_mapa_div">

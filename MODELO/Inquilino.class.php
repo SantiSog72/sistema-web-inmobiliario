@@ -1,18 +1,18 @@
 <?php
-	
-// date () devuelve un string del sia actual, sirve para dar formato a una fecha
+require_once 'Contacto.class.php';	
 class Inquilino {
 	
     private $dni="";
 	private $nombre="";
 	private $apellido="";
-    
+    private Contacto $contacto;
 	
 	
-	public function __construct ($dni, $nombre, $apellido){
+	public function __construct ($dni, $nombre, $apellido, $contacto){
 		$this -> dni = $dni;
 		$this -> nombre = $nombre;
 		$this -> apellido = $apellido;
+		$this -> contacto= $contacto;
 	}
 	
 	
@@ -27,11 +27,9 @@ class Inquilino {
 	public function getApellido (){
 		return $this -> apellido;
 	}
-	
-	public function mostrar (){
-		echo "dni: ".$this -> dni."<br>";
-		echo "nombre: ".$this -> nombre."<br>";
-		echo "apellido: ".$this -> apellido."<br>";
+
+	public function getContacto(){
+		return $this -> contacto;
 	}
 }
 ?>

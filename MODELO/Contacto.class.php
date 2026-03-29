@@ -1,9 +1,9 @@
 <?php
 class Contacto {
 	
-    private $nombre_contacto="";
-	private $nro_celular="";
-	private $email="";
+    private string $nombre_contacto="";
+	private string $nro_celular="";
+	private string $email="";
 
 	public function __construct ($nombre_contacto, $nro_celular, $email){
 	
@@ -22,13 +22,6 @@ class Contacto {
 	
 	public function getEmail (){
 		return $this -> email;
-	}
-
-	
-	public function mostrar (){
-		echo "nro contacto: ".$this -> nombre_contacto."<br>";
-		echo "nro celular: ".$this -> nro_celular."<br>";
-		echo "email: ".$this -> email."<br>";
 	}
 }
 ?>

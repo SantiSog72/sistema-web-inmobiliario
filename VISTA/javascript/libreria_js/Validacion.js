@@ -161,6 +161,26 @@ class Validacion {
 		return true;
 	}
 
+	static contrasenaBasica(contraseña){
+		if (contraseña.value == ""){
+			return {valido : false, error: "deve ingresar clave"};		
+		}
+		if (contraseña.value.length < 8){
+			return {valido : false, error: "la clave debe tener minimo 8 caracteres"};				
+		}
+		return {valido: true};
+	}
+
+	static dni(dni){
+		if (dni.value == ""){
+			return {valido : false, error: "deve ingresar el dni"};		
+		}
+		if (dni.value.length < 8){
+			return {valido : false, error: "El dni tiene 8 caracteres"};				
+		}
+		return {valido: true};
+	}
+
 
 
 	
