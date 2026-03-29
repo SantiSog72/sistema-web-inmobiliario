@@ -6,22 +6,55 @@
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina ingreso">
 
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
+<script type="text/javascript" src ="javascript/Validador_ingreso.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function (){
+        const formulario_registro = document.getElementById("id_fomr_ingreso");
+        
+        formulario_registro.addEventListener('submit', async function(evento) {
+			evento.preventDefault(); 
 
-<link rel="stylesheet" href="VISTA/css//index.css">
-<link rel="stylesheet" href="VISTA/css/formulario_estilos.css">
+			const datos = new FormData(formulario_registro);
+
+			try {
+				// El "await" espera la respuesta del servidor (es lo que permie el asincronico)
+				const respuesta = await fetch('/CONTROLADOR/ProcesaingresoUsuario.php', {
+					method: 'POST',
+					body: datos
+				});
+
+				const resultado = await respuesta.json();
+
+				if (resultado.exito) {
+					console.log(resultado.mensaje)
+					// ir_MisINmuebles();
+				} else {
+					alert("Error: " + resultado.mensaje);
+				}
+			} catch (error) {
+				console.error("Error en la conexión:", error);
+			}
+		});
+    })
+</script>
+
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/formulario_estilos.css">
 
 <title>Sing In</title>
 </head>
 
 <body>
 	<header>
-	<h1>Ingreso</h1>
+	<h1>Ingreso Usuario Administrador</h1>
 	</header>
 	<section>
 		<article class= "contenedor_formulario">
-			<form id="id_fomr_ingreso" class "formulario" method="POST" action ="">
+			<form id="id_fomr_ingreso" class "formulario" method="POST" action ="../CONTROLADOR/ProcesaingresoUsuario.php">
 				<fieldset class = "fieldset" name="Singin">
 					
 					<span class="form_grupo">
@@ -32,7 +65,7 @@
 				
 					<span class="form_grupo">
 						<label class ="label" for ="id_contraseña">Contraseña: </label>
-						<input onblur ="" id ="id_contraseña"type="text" name="contraseña" maxlength="20" placeholder="ingrese su contraseña" value="Escude123">
+						<input onblur ="" id ="id_contraseña"type="text" name="contrasena" maxlength="20" placeholder="ingrese su contraseña" value="12345678">
 						<input name="contraseña_encriptada" type="hidden" value="">
 						<span id="error_contraseña" class="error"></span>
 					</span>
@@ -40,7 +73,6 @@
 				
 				
 				<fieldset class = "fieldset field_acciones" name="acciones_botones">
-					<!-- <a  id="id_envio" class="boton" type ="button" onclick = "enviar_formulario();" href = "pagina_ingreso.html">enviar</a> -->
 					<button id="id_envio" class="boton" type ="button" onclick = "enviar_formulario ();" href = "pagina_ingreso.html">ingresar</button>
 					<button id="id_borrar" class="boton" type ="button" onclick = "borrar();">borrar</button>
 					<button id="id_registrarse" class="boton" type ="button" onclick = "ir_registro();">registrarse</a></button>

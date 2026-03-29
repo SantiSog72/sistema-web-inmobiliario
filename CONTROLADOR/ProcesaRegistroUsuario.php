@@ -10,18 +10,11 @@ require_once BASE_PATH.'MODELO/Contacto.class.php';
 //se puede mejorar mucho con ajax
 //verificar que dni no este repetido
 $conexion = ConexionBDD::getInstancia();
-$lista_usuarios= $conexion -> obtener_usuarios();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $repetido = false;
-    foreach($lista_usuarios as $usuario_bdd){
-        if ($_POST['dni'] === $usuario_bdd['dni']){
-            $repetido = true;
-            break;
-        }
-    }
+    
 
-    if (!$repetido){
+    if (!$conexion -> obtener_usuario($_POST['dni'])){
         $contacto = new Contacto(
             $_POST['nombre'],//no relevante
             $_POST['nro_celular'],
@@ -34,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_POST['apellido'],
             $contacto
         );
+        print_r($usuario);
 
 
       

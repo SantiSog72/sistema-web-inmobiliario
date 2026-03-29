@@ -1,4 +1,4 @@
-// const formulario = document.getElementById("id_fomr_registro");//aun no cargo la pagina
+// const formulario = document.getElementById("id_fomr_registro");//aun no cargo la pagina, mejorable con ajax
 function borrar (){
 	formulario = document.getElementById("id_fomr_registro");
 	Validacion.limpiar_erorres();
@@ -71,7 +71,7 @@ function enviar_formulario (){
 	// console.log(formulario);
 	
 	if (validar_datos()){
-		alert("el Usuario se valido exitosamente");
+		// alert("el Usuario se valido exitosamente");
 		formulario.submit();
 	}
 }

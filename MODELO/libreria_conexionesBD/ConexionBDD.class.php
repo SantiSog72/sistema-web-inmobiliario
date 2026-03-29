@@ -273,6 +273,20 @@ class ConexionBDD {
         $consulta -> bind_param('i',$nro_inmueble);
         $consulta -> execute();
     }
+
+    public function obtener_usuario ($dni_usuario){
+        $consulta = $this -> conexion -> prepare("
+            SELECT *
+            FROM usuario_administrador ua
+            WHERE ua.dni = ?
+        ");
+        $consulta -> bind_param("s", $dni_usuario);
+        $consulta -> execute();
+        $resultado = $consulta -> get_result();
+        $usuario = $resultado -> fetch_assoc();
+        $resultado->free();
+        return $usuario;
+    }
 	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		
 	// 	$query = "INSERT INTO usuario (email, contraseña, nombre, apellido, sexo, fecha_nacimiento, numero_celular, dni)";
 	// 	$query .= "VALUES ('".$email."','".$contraseña."','".$nombre."','".$apellido."','".$sexo."','".$fecha_nacimiento."','".$nro_celular."','".$dni."')";
