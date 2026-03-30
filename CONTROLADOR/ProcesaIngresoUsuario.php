@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 }
@@ -29,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 "mensaje" => "Ingreso exitoso"//para el console.log
             ];
 
-            session_start();
             $_SESSION["usuario"] = $json_usuario;
         }
     }

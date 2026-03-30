@@ -301,9 +301,27 @@ class ConexionBDD {
         return $consulta->execute();
     }
 
-    // public function obtener_mensajes ($dni_usuario) {
+    public function obtener_mensajes ($dni_usuario) {
+        $consulta = $this -> conexion -> prepare("
+            SELECT i.nro_inmueble, i.direccion, i.dni_usuario, m.nro_mensaje, m.fecha_hora,
+            m.nombre, m.apellido, m.email, m.nro_celular, m.Cuerpo_mensaje, m.visto
+            FROM mensaje m NATURAL JOIN inmueble i INNER JOIN usuario_administrador u
+            WHERE i.dni_usuario = ?
+        ");
+        
 
-    // }
+        $consulta->bind_param("s",
+            $dni_usuario
+        );
+        $consulta->execute();
+        $resultado = $consulta -> get_result();
+        $lista_mensajes = [];
+        while($fila = $resultado -> fetch_assoc()){
+            $lista_mensajes [] = $fila;
+        }
+        $resultado -> free();
+        return $lista_mensajes;
+    }
 
     public function obtener_todas_opciones_financiacion() {
         $consulta = $this->conexion->prepare("

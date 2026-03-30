@@ -25,7 +25,6 @@ function renderizarTarjetasJSON(listaInmuebles) {
     });
 }
 
-
 function renderizarMasInfo(item) {
     // elemento_a_expandir = document.getElementById(item.id_operacion); //la etiqueta tiene el id de su objeto
     id_contenedor=`${item.id_operacion},${item.tipo}`;
@@ -134,4 +133,33 @@ function crear_boton (clase, item, texto){
     boton.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
     boton.textContent = `${texto}`;
     return boton;
+}
+
+function renderizar_mensajesJSON (lista_mensajes){
+    limpiar_contenedor('id_contenedor_mensajes');
+    limpiar_contenedor('id_contenedor_catalogo');
+
+    if (lista_mensajes.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
+        return;
+    }
+
+    lista_mensajes.forEach(item => {
+        // Armar tarjeta 
+        //se guarda el id del objeto y el tipo (se requieren los dos para identificar una operacion)
+        const htmlTarjeta = `
+            <div id="${item.nro_mensaje}" class="tarjeta_mensaje">
+                <p>titulo Propiedad: </p>
+                <p>direccion: ${item.direccion} </p>
+                <p>Mensaje de: ${item.nombre} ${item.apellido}</p>
+                <p>Contacto: </p>
+                <p>Numero de Telefono: ${item.nro_celular}</p>
+                <p>Direccion de Correo: ${item.email}</p>
+                <p class="textarea" >Mensaje: ${item.Cuerpo_mensaje}</p>
+            </div>
+        `;
+        
+        agregar_elemento_final(htmlTarjeta, 'id_contenedor_mensajes');
+    });
+
 }

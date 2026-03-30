@@ -23,25 +23,15 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
 		const contenedor = document.getElementById('id_contenedor_catalogo');
-
 		cargo_cookies();
 
 		// 1. Función para obtener y mostrar datos
-		async function cargarCatalogo(parametros = "") {
+		async function cargarCatalogo() {
 			try {
-				// Si hay parámetros agregamos el ?, si no, llamamos al archivo pelado
-				//la URL de un archivo del servidor que procesa los datos
-				const url = '../CONTROLADOR/ProcesaMisInmuebles.php' + (parametros ? '?' + parametros : '');
-				//se realiza el pedido al servidor
+				const url = '/CONTROLADOR/ProcesaMisInmuebles.php';
 				const respuesta = await fetch(url);
-				//se recibe la respuesta y se la castea objeto json
 				const lista_inmuebles = await respuesta.json();
-
-				//combierte el json en string, luego guarda catalogo en local storage
 				localStorage.setItem("mi_catalogo", JSON.stringify(lista_inmuebles));
-
-
-				
 				renderizarMisTarjetasJSON(lista_inmuebles);
 			} catch (error) {
 				console.error("Error al cargar el catálogo:", error);
@@ -49,10 +39,25 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 			}
 		}
 
-		// 2. CARGA INICIAL: Se ejecuta apenas abre la página
-		cargarCatalogo(); 
+		// async function cargarMensajes() {
+		// 	try {
+		// 		const respuesta = await fetch('${BASE_PATH}/CONTROLADOR/ProcesaMisInmuebles.php');
+		// 		const mensajes = await respuesta.json();
+		// 		//if hay no vistos
+		// 		if (mensajes){
+		// 			renderizar_mensajesJSON (mensajes);
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Error al cargar los mensajes:", error);
+		// 		contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
+		// 	}
+		// }
 
-		// 3. CARGA POR BÚSQUEDA: Se ejecuta al enviar el formulario
+		cargarCatalogo(); 
+		// cargarMensajes(); 
+
+		
+
 		// formulario.addEventListener('submit', async function(evento) {
 		// 	evento.preventDefault(); //evita que se recargue la pagina (que se envie el formulario)
 		// 	const datos = new FormData(formulario);//recolecta la informacion del formulario que se estaba por enviar
@@ -115,10 +120,13 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 	<nav class="contenedor_mapa">
 		<button class= "boton" onclick="">Log out</button>
 		<button class= "boton" onclick="ir_AltaOperacion()">Alta Operacion</button>
+		<span>
+		</span>
 		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa Catalogo Completo</button>
 		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
 	</nav>
-
+	
+	<p id ="mensajes_nuevos"></p>
 	<p id="id_visitas"></p>
 	<p id ="id_fecha_ultimo_acceso"></p>
 	</header>
@@ -196,6 +204,12 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 		<section class="section_catalogo">
 			<h2 class="titulo_de_contenedor">mis inmuebles</h2>
 			<div id="id_contenedor_catalogo" class="contenedor_catalogo">
+			</div>
+		</section>
+
+		<section class="seccion_mensajes">
+			<h2 class="titulo_de_contenedor">mensajes</h2>
+			<div id="id_contenedor_mensajes" class="contenedor_mensajes">
 			</div>
 		</section>
 	</main>
