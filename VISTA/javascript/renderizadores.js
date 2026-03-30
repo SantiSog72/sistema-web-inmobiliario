@@ -57,7 +57,7 @@ function renderizarMasInfo(item) {
             <h4>fotos del inmueble:</h4>
             <div class="contenedor_fotos">
                 ${(item.inmueble.lista_fotos && item.inmueble.lista_fotos.length > 0) ? item.inmueble.lista_fotos.map(foto => `
-                    <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.nombre_foto}" onclick="">
+                    <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.nombre_foto}" onclick="expandir_foto(this)">
                 `).join(''):"El inmueble no tiene fotos"}
             </div>
 
