@@ -43,7 +43,7 @@ if (isset($_GET['operacion']) || isset($_GET['zona'])) {
     // Si no hay filtros (carga inicial vía AJAX), usamos el completo
     $catalogo_a_procesar = $catalogo_completo;
 }
-
+//mejorar con el get_catalogo josn
 $datos_json = [];
 if (is_array($catalogo_a_procesar)){
     foreach ($catalogo_a_procesar as $operacion) {

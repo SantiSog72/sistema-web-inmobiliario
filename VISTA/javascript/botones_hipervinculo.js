@@ -14,3 +14,7 @@ function ir_singUp(){
 function ir_AltaOperacion(){
     window.location.href =`${raiz}/VISTA/Alta_operacion.php`;	
 }
+
+function ir_gestionAdministrador(){
+    window.location.href =`${raiz}/VISTA/gestion_administrador.php`;	
+}

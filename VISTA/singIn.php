@@ -1,4 +1,8 @@
-
+<?php
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,10 +23,11 @@
 			evento.preventDefault(); 
 
 			const datos = new FormData(formulario_registro);
+			console.log (datos);
 
 			try {
 				// El "await" espera la respuesta del servidor (es lo que permie el asincronico)
-				const respuesta = await fetch('/CONTROLADOR/ProcesaingresoUsuario.php', {
+				const respuesta = await fetch('../CONTROLADOR/ProcesaingresoUsuario.php', {
 					method: 'POST',
 					body: datos
 				});
@@ -30,8 +35,8 @@
 				const resultado = await respuesta.json();
 
 				if (resultado.exito) {
-					console.log(resultado.mensaje)
-					// ir_MisINmuebles();
+					console.log(resultado);
+					ir_gestionAdministrador();
 				} else {
 					alert("Error: " + resultado.mensaje);
 				}
@@ -54,7 +59,7 @@
 	</header>
 	<section>
 		<article class= "contenedor_formulario">
-			<form id="id_fomr_ingreso" class "formulario" method="POST" action ="../CONTROLADOR/ProcesaingresoUsuario.php">
+			<form id="id_fomr_ingreso" class "formulario" method="POST">
 				<fieldset class = "fieldset" name="Singin">
 					
 					<span class="form_grupo">
@@ -73,9 +78,9 @@
 				
 				
 				<fieldset class = "fieldset field_acciones" name="acciones_botones">
-					<button id="id_envio" class="boton" type ="button" onclick = "enviar_formulario ();" href = "pagina_ingreso.html">ingresar</button>
-					<button id="id_borrar" class="boton" type ="button" onclick = "borrar();">borrar</button>
-					<button id="id_registrarse" class="boton" type ="button" onclick = "ir_registro();">registrarse</a></button>
+					<button id="id_envio" class="boton" type ="submit">ingresar</button>
+					<button id="id_borrar" class="boton" type ="reset">borrar</button>
+					<button id="id_registrarse" class="boton" type ="button" onclick = "ir_singUp();">registrarse</button>
 				</fieldset>
 				
 			</form>

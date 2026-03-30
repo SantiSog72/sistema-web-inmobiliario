@@ -29,16 +29,29 @@ class ConexionBDD {
         return self::$instancia;
     }
 
-    public function obtener_alquileres() {
-        $consulta = $this->conexion->prepare("
-            SELECT a.nro_operacion, a.titulo_publicacion, a.precio, a.disponibilidad, a.esta_amoblado, a.plazo,
-                   i.nro_inmueble, i.tipo_propiedad, i.descripcion,
-                   i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
-                   i.cord_latitud, i.cord_longitud, i.direccion, i.zona
-            FROM alquiler a
-            JOIN inmueble i ON a.nro_inmueble = i.nro_inmueble
-            WHERE a.disponibilidad = 1
-        ");
+    public function obtener_alquileres($dni_usuario) {
+        if ($dni_usuario != null){
+            $consulta = $this->conexion->prepare("
+                SELECT a.nro_operacion, a.titulo_publicacion, a.precio, a.disponibilidad, a.esta_amoblado, a.plazo,
+                       i.nro_inmueble, i.tipo_propiedad, i.descripcion,
+                       i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
+                       i.cord_latitud, i.cord_longitud, i.direccion, i.zona
+                FROM alquiler a
+                JOIN inmueble i ON a.nro_inmueble = i.nro_inmueble
+                WHERE i.dni_usuario = ?
+            ");
+            $consulta->bind_param("s", $dni_usuario);
+        }else{
+            $consulta = $this->conexion->prepare("
+                SELECT a.nro_operacion, a.titulo_publicacion, a.precio, a.disponibilidad, a.esta_amoblado, a.plazo,
+                       i.nro_inmueble, i.tipo_propiedad, i.descripcion,
+                       i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
+                       i.cord_latitud, i.cord_longitud, i.direccion, i.zona
+                FROM alquiler a
+                JOIN inmueble i ON a.nro_inmueble = i.nro_inmueble
+                WHERE a.disponibilidad = 1
+            ");
+        }
         $consulta->execute();
         $resultado = $consulta->get_result();
         $lista = [];
@@ -51,17 +64,33 @@ class ConexionBDD {
     }
 
     
-    public function obtener_ventas() {
-        $consulta = $this->conexion->prepare("
-            SELECT v.nro_operacion, v.titulo_publicacion, v.precio, v.disponibilidad, 
-                   v.apto_credito_hipotecario,
-                   i.nro_inmueble, i.tipo_propiedad, i.descripcion,
-                   i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
-                   i.cord_latitud, i.cord_longitud, i.direccion, i.zona
-            FROM venta v
-            JOIN inmueble i ON v.nro_inmueble = i.nro_inmueble
-            WHERE v.disponibilidad = 1
-        ");//prepara consulta
+    public function obtener_ventas($dni_usuario) {
+
+        if ($dni_usuario != null){
+            $consulta = $this->conexion->prepare("
+                SELECT v.nro_operacion, v.titulo_publicacion, v.precio, v.disponibilidad, 
+                    v.apto_credito_hipotecario,
+                    i.nro_inmueble, i.tipo_propiedad, i.descripcion,
+                    i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
+                    i.cord_latitud, i.cord_longitud, i.direccion, i.zona
+                FROM venta v
+                JOIN inmueble i ON v.nro_inmueble = i.nro_inmueble
+                WHERE i.dni_usuario = ?
+            ");//prepara consulta
+            $consulta->bind_param("s", $dni_usuario);
+        }else{
+            $consulta = $this->conexion->prepare("
+                SELECT v.nro_operacion, v.titulo_publicacion, v.precio, v.disponibilidad, 
+                       v.apto_credito_hipotecario,
+                       i.nro_inmueble, i.tipo_propiedad, i.descripcion,
+                       i.con_quincho, i.con_lavadero, i.con_patio, i.con_garage,
+                       i.cord_latitud, i.cord_longitud, i.direccion, i.zona
+                FROM venta v
+                JOIN inmueble i ON v.nro_inmueble = i.nro_inmueble
+                WHERE v.disponibilidad = 1
+            ");//prepara consulta
+        }
+
         $consulta->execute();//ejecuta la consulta preparada
         $resultado = $consulta->get_result();//objeto MySQLi
         $lista = [];
@@ -287,6 +316,7 @@ class ConexionBDD {
         $resultado->free();
         return $usuario;
     }
+
 	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		
 	// 	$query = "INSERT INTO usuario (email, contraseña, nombre, apellido, sexo, fecha_nacimiento, numero_celular, dni)";
 	// 	$query .= "VALUES ('".$email."','".$contraseña."','".$nombre."','".$apellido."','".$sexo."','".$fecha_nacimiento."','".$nro_celular."','".$dni."')";

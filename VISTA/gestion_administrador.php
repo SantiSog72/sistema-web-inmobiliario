@@ -1,55 +1,48 @@
 <?php
+
 // Define la ruta base del proyecto
 define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 
-require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
-// $ControladorCatalogo = new ControladorCatalogo();
-// $catalogo = $ControladorCatalogo -> get_lista_catalogo();
-// echo "<pre>";
-// var_dump($catalogo);
-// echo "</pre>";
+// require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
-<meta name="description" content="Pagina principal">
+<meta name="description" content="Pagina Gestion Administrador">
 
-<!-- <script type="text/javascript" src ="https:/maps.googleapis.com/maps/api/"></script> -->
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/Cookies.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="javascript/ManejoMapa.js"></script>
+<script type="text/javascript" src ="javascript/renderizadores.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/Cookies.js"></script>
+<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
-		const formulario = document.getElementById('id_formulario_busqueda');
 		const contenedor = document.getElementById('id_contenedor_catalogo');
 
-		// cargo_cookies();
+		cargo_cookies();
 
 		// 1. Función para obtener y mostrar datos
 		async function cargarCatalogo(parametros = "") {
 			try {
 				// Si hay parámetros agregamos el ?, si no, llamamos al archivo pelado
 				//la URL de un archivo del servidor que procesa los datos
-				const url = 'CONTROLADOR/ProcesaBuscar.php' + (parametros ? '?' + parametros : '');
+				const url = '../CONTROLADOR/ProcesaMisInmuebles.php' + (parametros ? '?' + parametros : '');
 				//se realiza el pedido al servidor
 				const respuesta = await fetch(url);
-				// console.log (respuesta);
 				//se recibe la respuesta y se la castea objeto json
 				const lista_inmuebles = await respuesta.json();
-				// console.log (lista_inmuebles);
 
 				//combierte el json en string, luego guarda catalogo en local storage
-				localStorage.setItem("catalogo_actual", JSON.stringify(lista_inmuebles));
+				localStorage.setItem("mi_catalogo", JSON.stringify(lista_inmuebles));
+
 
 				
-				renderizarTarjetasJSON(lista_inmuebles);
+				renderizarMisTarjetasJSON(lista_inmuebles);
 			} catch (error) {
 				console.error("Error al cargar el catálogo:", error);
 				contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
@@ -60,75 +53,74 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 		cargarCatalogo(); 
 
 		// 3. CARGA POR BÚSQUEDA: Se ejecuta al enviar el formulario
-		formulario.addEventListener('submit', async function(evento) {
-			evento.preventDefault(); //evita que se recargue la pagina (que se envie el formulario)
-			const datos = new FormData(formulario);//recolecta la informacion del formulario que se estaba por enviar
-			const params = new URLSearchParams(datos).toString();//transforma la info del formualrio a un string para el servidor
-			//en un formato que el servidor entiede
+		// formulario.addEventListener('submit', async function(evento) {
+		// 	evento.preventDefault(); //evita que se recargue la pagina (que se envie el formulario)
+		// 	const datos = new FormData(formulario);//recolecta la informacion del formulario que se estaba por enviar
+		// 	const params = new URLSearchParams(datos).toString();//transforma la info del formualrio a un string para el servidor
+		// 	//en un formato que el servidor entiede
 			
-			cargarCatalogo(params);
-		});
+		// 	cargarCatalogo(params);
+		// });
 
-		formulario.addEventListener('reset', async function(){
-			localStorage.removeItem("catalogo_actual");
-			cargarCatalogo();
-		})
+		// formulario.addEventListener('reset', async function(){
+		// 	localStorage.removeItem("mi_catalogo");
+		// 	cargarCatalogo();
+		// })
 
 		//evento del mas-info
-		contenedor.addEventListener("click", function(evento) {
-			if (evento.target.classList.contains('boton_mas_info')) {
-				// 1. Obtenemos los datos del botón
-				const idOperacion_tipoOperacion = evento.target.getAttribute('data-id');
-				const [idOperacion, tipoOperacion] = idOperacion_tipoOperacion.split(",");
+		// contenedor.addEventListener("click", function(evento) {
+		// 	if (evento.target.classList.contains('boton_mas_info')) {
+		// 		// 1. Obtenemos los datos del botón
+		// 		const idOperacion_tipoOperacion = evento.target.getAttribute('data-id');
+		// 		const [idOperacion, tipoOperacion] = idOperacion_tipoOperacion.split(",");
 
-				// 2. Buscamos en localStorage
-				const lista_catalogo_str = localStorage.getItem("catalogo_actual");
+		// 		// 2. Buscamos en localStorage
+		// 		const lista_catalogo_str = localStorage.getItem("mi_catalogo");
 				
-				if (lista_catalogo_str) {
-					const lista_catalogo = JSON.parse(lista_catalogo_str);
+		// 		if (lista_catalogo_str) {
+		// 			const lista_catalogo = JSON.parse(lista_catalogo_str);
 
-					// 3. Usamos .find() para recuperar el objeto directamente
-					// Importante: Asegúrate de que idOperacion sea del mismo tipo (número o string)
-					const operacion_seleccionada = lista_catalogo.find(item => 
-						item.tipo === tipoOperacion && item.id_operacion == idOperacion
-					);
+		// 			// 3. Usamos .find() para recuperar el objeto directamente
+		// 			// Importante: Asegúrate de que idOperacion sea del mismo tipo (número o string)
+		// 			const operacion_seleccionada = lista_catalogo.find(item => 
+		// 				item.tipo === tipoOperacion && item.id_operacion == idOperacion
+		// 			);
 
-					if (operacion_seleccionada) {
-						console.log("Operación encontrada:", operacion_seleccionada);
-						renderizarMasInfo(operacion_seleccionada);
-					} else {
-						console.warn("No se encontró la operación con ID:", idOperacion);
-					}
-				} else {
-					console.error("No se encontró catálogo en local storage");
-				}
-			}
-		});
+		// 			if (operacion_seleccionada) {
+		// 				console.log("Operación encontrada:", operacion_seleccionada);
+		// 				renderizarMasInfo(operacion_seleccionada);
+		// 			} else {
+		// 				console.warn("No se encontró la operación con ID:", idOperacion);
+		// 			}
+		// 		} else {
+		// 			console.error("No se encontró catálogo en local storage");
+		// 		}
+		// 	}
+		// });
 
 
 	});
 
 </script>
 
-<link rel="stylesheet" href="VISTA/css/index.css">
-<link rel="stylesheet" href="VISTA/css/formulario_estilos.css">
-<!-- <link rel="stylesheet" href="VISTA/css//mapas.css"> -->
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/formulario_estilos.css">
 
-<title>Sistema Informacion Inmoviliaria</title>
+<title>Pagina Gestion Administrador</title>
 </head>
 <!-- con el onload trae todo el catalogo para mostrar -->
 <body> 
 	<header>
-	<h1>Sistema Informacion Inmoviliaria</h1>
+	<h1>Gestion de Inmuebles</h1>
 	<nav class="contenedor_mapa">
-		<button class= "boton" onclick="ir_singIn();">Iniciar sesion</button>
-		<button class= "boton" onclick="ir_singUp();">registrarse</button>
+		<button class= "boton" onclick="">Log out</button>
+		<button class= "boton" onclick="ir_AltaOperacion()">Alta Operacion</button>
 		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa Catalogo Completo</button>
 		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
 	</nav>
 
-	<!-- <p id="id_visitas"></p>
-	<p id ="id_fecha_ultimo_acceso"></p> -->
+	<p id="id_visitas"></p>
+	<p id ="id_fecha_ultimo_acceso"></p>
 	</header>
 
 	<div id="id_mapa_div">
@@ -137,7 +129,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 	</div>
 	
 	<main>
-		<section id="id_filtros_busqueda">
+		<!-- <section id="id_filtros_busqueda">
 			<form id="id_formulario_busqueda" name="formulario_busqueda" method="GET">
 				<fieldset class="fieldset contenedor_formulario">
 					<legend class="legend">buscar inmuebles</legend>
@@ -199,10 +191,10 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 				</fieldset>
 
 			</form> 
-		</section>
+		</section> -->
 		
 		<section class="section_catalogo">
-			<h2 class="titulo_de_contenedor">catálogo</h2>
+			<h2 class="titulo_de_contenedor">mis inmuebles</h2>
 			<div id="id_contenedor_catalogo" class="contenedor_catalogo">
 			</div>
 		</section>

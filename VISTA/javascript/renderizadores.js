@@ -57,7 +57,7 @@ function renderizarMasInfo(item) {
             <h4>fotos del inmueble:</h4>
             <div class="contenedor_fotos">
                 ${(item.inmueble.lista_fotos && item.inmueble.lista_fotos.length > 0) ? item.inmueble.lista_fotos.map(foto => `
-                    <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.descripcion}" onclick="">
+                    <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.nombre_foto}" onclick="">
                 `).join(''):"El inmueble no tiene fotos"}
             </div>
 
@@ -67,7 +67,72 @@ function renderizarMasInfo(item) {
     agregar_elemento_despues_de(htmlMasInfo, id_contenedor);
 }
 
-// function renderizarLista_fotos_alta_operacion (lista_fotos){
-//     limpiar_contenedor('lista_nombres');
+function renderizarMisTarjetasJSON(listaInmuebles) {
+    limpiar_contenedor('id_contenedor_catalogo');
 
-// }
+    if (listaInmuebles.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
+        return;
+    }
+
+    // $lista_venta = listaInmuebles.filter(item => item.tipo === "Venta");
+    // $lista_alquiler = listaInmuebles.filter(item => item.tipo === "alquiler");
+
+    // Armar tarjeta vendidos
+    listaInmuebles.forEach(item => {
+
+        //contenedor de todo el catalogo
+        let contenedor_catalogo = document.getElementById("id_contenedor_catalogo");
+
+        //crea las etiquetas basicas
+        let div = document.createElement("div");
+        div.setAttribute("id", `${item.id_operacion},${item.tipo}`);
+        div.setAttribute("class", "tarjeta_operacion");
+
+        let p = document.createElement("p");
+        p.innerHTML =  `${item.titulo} - <strong>${item.inmueble.ubicacion.zona}</strong> - ${item.tipo}: $${item.precio}`;
+
+        div.appendChild(p);
+
+        let boton_mas_info = document.createElement("button");
+        boton_mas_info.setAttribute("class", "boton boton_mas_info");
+        boton_mas_info.setAttribute("type", "button");
+        boton_mas_info.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
+        boton_mas_info.textContent = "más info";
+        
+        div.appendChild(boton_mas_info);
+
+        
+
+        //crea etiquetaas unicas
+        if (item.disponible){
+            if (item.tipo === "Alquiler"){
+                boton_disponible = crear_boton("boton_alquilar",item, "alquilar");
+            }else{
+                boton_disponible = crear_boton("boton_vender",item, "vender");
+            }
+            div.appendChild(boton_disponible);
+        }else{
+            if (item.tipo === "Alquiler"){
+                boton_gestion_pagos = crear_boton("boton_gestion_pagos",item, "gestion pagos");
+                div.appendChild(boton_gestion_pagos);
+            }
+        }
+
+        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
+        div.appendChild(boton_eliminar_publicacion);
+        
+        
+        contenedor_catalogo.appendChild(div);
+
+    });
+}
+
+function crear_boton (clase, item, texto){
+    boton = document.createElement("button");
+    boton.setAttribute("class",`boton ${clase}`);
+    boton.setAttribute("type", "button");
+    boton.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
+    boton.textContent = `${texto}`;
+    return boton;
+}

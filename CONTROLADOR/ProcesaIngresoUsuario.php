@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_SESSION["usuario"] = $json_usuario;
         }
     }
-
     // Enviamos la respuesta
     header('Content-Type: application/json');
     echo json_encode($json_respuesta);
