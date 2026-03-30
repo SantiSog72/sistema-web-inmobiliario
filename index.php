@@ -16,8 +16,9 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina principal">
 
-<!-- <script type="text/javascript" src ="https:/maps.googleapis.com/maps/api/"></script> -->
 <script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/libreria_js/Ventana_emergente.js"></script>
+<script type="text/javascript" src ="VISTA/javascript/manejoVentanasEmergentes.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>

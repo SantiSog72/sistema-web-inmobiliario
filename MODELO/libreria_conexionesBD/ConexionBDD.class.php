@@ -9,6 +9,7 @@ require_once BASE_PATH.'MODELO/Operacion.class.php';
 require_once BASE_PATH.'MODELO/Alquiler.class.php';
 require_once BASE_PATH.'MODELO/Venta.class.php';
 require_once BASE_PATH.'MODELO/Contacto.class.php';
+require_once BASE_PATH.'MODELO/Mensaje.class.php';
 require_once BASE_PATH.'MODELO/UsuarioAdministrador.class.php';
 
 class ConexionBDD {
@@ -163,10 +164,10 @@ class ConexionBDD {
 
         $dni      = $usuario->get_dni();
         $pass     = $usuario->get_contrasena();
-        $nombre   = $usuario->get_nombre();
-        $apellido = $usuario->get_apellido();
-
+        
         $contacto = $usuario->get_contacto();
+        $apellido = $contacto->get_apellido();
+        $nombre   = $contacto->get_nombre();
         $celular  = $contacto->getNro_celular();
         $email    = $contacto->getEmail();
 
@@ -276,6 +277,33 @@ class ConexionBDD {
             $consulta->execute();
         }
     }
+
+    public function ingresar_mensaje ($mensaje){
+        $consulta = $this -> conexion -> prepare("
+            INSERT INTO mensaje (nro_inmueble, fecha_hora, nombre, apellido, email, nro_celular, Cuerpo_mensaje, visto)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $nro_inmueble =   $mensaje -> getNroInmueble();
+        $fechaHora =      $mensaje ->getFechaHora();
+        $cuerpo_mensaje = $mensaje ->getCuerpoMensaje();
+        $visto =          $mensaje ->getVisto();
+        
+        $contacto = $mensaje -> getContacto();
+
+        $nombre = $contacto ->get_nombre();
+        $apellido = $contacto ->get_apellido();
+        $email = $contacto ->getEmail();
+        $nro_celular = $contacto ->getNro_celular();
+
+        $consulta->bind_param("issssssi",
+            $nro_inmueble, $fechaHora, $nombre, $apellido, $email, $nro_celular, $cuerpo_mensaje, $visto
+        );
+        return $consulta->execute();
+    }
+
+    // public function obtener_mensajes ($dni_usuario) {
+
+    // }
 
     public function obtener_todas_opciones_financiacion() {
         $consulta = $this->conexion->prepare("

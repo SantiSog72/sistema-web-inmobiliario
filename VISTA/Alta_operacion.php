@@ -185,7 +185,7 @@
 
                     <span class="form_grupo">
                         <label class="label" for="id_descripcion_inmueble">Descripción: </label> 
-                        <textarea id="id_descripcion_inmueble" type="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4" >departamento 5 hoala como estas estso es una descripcion</textarea>                  
+                        <textarea id="id_descripcion_inmueble" class="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4" >departamento 5 hoala como estas estso es una descripcion</textarea>                  
                         <!-- <input id="id_descripcion_inmueble" type="text-area" name="descripcion_inmueble" maxlength="500" placeholder="Ingrese la descripción del inmueble"> -->
                         <span id="error_descripcion_inmueble" class="error"></span>
                     </span>

@@ -60,8 +60,7 @@ function renderizarMasInfo(item) {
                     <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.nombre_foto}" onclick="expandir_foto(this)">
                 `).join(''):"El inmueble no tiene fotos"}
             </div>
-
-            <button class="buton">contactar dueño</button>
+            <button class="buton envio_mensaje" type ="buton" onclick ="ventana_mensaje(${item.inmueble.nro_inmueble},\'${item.titulo}\')">enviar menasje</button>
         </div>
     `;
     agregar_elemento_despues_de(htmlMasInfo, id_contenedor);

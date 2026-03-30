@@ -16,18 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if (!$conexion -> obtener_usuario($_POST['dni'])){
         $contacto = new Contacto(
-            $_POST['nombre'],//no relevante
+            $_POST['nombre'],
+            $_POST['apellido'],
             $_POST['nro_celular'],
             $_POST['email'],
         );
         $usuario = new UsuarioAdministrador(
             $_POST['dni'],
             $_POST['contrasena'],
-            $_POST['nombre'],
-            $_POST['apellido'],
             $contacto
         );
-        print_r($usuario);
+        // print_r($usuario);
 
 
       
