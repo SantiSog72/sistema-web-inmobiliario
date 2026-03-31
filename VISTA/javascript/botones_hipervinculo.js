@@ -1,5 +1,5 @@
 // Usamos la variable global definida en el PHP. 
-const raiz = window.BASE_URL || "/sistema%20web%20inmobiliario/";
+const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
 
 function ir_index(){
     window.location.href = `${raiz}index.php`;  

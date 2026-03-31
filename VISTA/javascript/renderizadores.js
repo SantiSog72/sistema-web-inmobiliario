@@ -1,3 +1,5 @@
+const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
+
 function renderizarTarjetasJSON(listaInmuebles) {
     limpiar_contenedor('id_contenedor_catalogo');
 
@@ -79,7 +81,7 @@ function renderizarMasInfo(item) {
                     <div class="contenedor_fotos_grid">
                         ${(item.inmueble.lista_fotos && item.inmueble.lista_fotos.length > 0) ? 
                             item.inmueble.lista_fotos.map(foto => `
-                                <img class="foto_galeria_mini" src="${foto.path}" alt="Inmueble" onclick="expandir_foto(this)">
+                                <img class="foto_galeria_mini" src="${raiz}${foto.path}" alt="Inmueble" onclick="expandir_foto(this)">
                             `).join('') : "<p>Sin fotos disponibles</p>"}
                     </div>
                 </div>

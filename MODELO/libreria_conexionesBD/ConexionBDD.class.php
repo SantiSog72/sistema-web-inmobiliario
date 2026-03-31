@@ -1,7 +1,7 @@
 <?php
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
+// se puede usar el BASE_PATH al ingresar y tomar las fotos url
+
 require_once BASE_PATH.'MODELO/Inmueble.class.php';
 require_once BASE_PATH.'MODELO/Foto.class.php';
 require_once BASE_PATH.'MODELO/Ubicacion.class.php';

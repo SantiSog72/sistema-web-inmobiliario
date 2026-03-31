@@ -1,4 +1,4 @@
-
+const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
 var mapa_actual = null;
 const id_contenedor_mapa = "id_mapa_div";
 
@@ -27,7 +27,7 @@ function generoMapa(lat, lng, zoom) {
 
 function crearMarcadores() {
     var miIcono = L.icon({
-        iconUrl: '/sistema%20web%20inmobiliario/imagenes/iconos/icono_casa_negro.png',
+        iconUrl: '${raiz}imagenes/iconos/icono_casa_negro.png',
         iconSize: [38, 38],
         iconAnchor: [19, 38],
         popupAnchor: [0, -38]

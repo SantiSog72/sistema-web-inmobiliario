@@ -1,6 +1,7 @@
 <?php
-require_once 'Operacion.class.php';
-require_once 'Opcion_financiacion.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
+require_once BASE_PATH.'MODELO/Operacion.class.php';
+require_once BASE_PATH.'MODELO/Opcion_financiacion.class.php';
 
 class Venta extends Operacion{
     

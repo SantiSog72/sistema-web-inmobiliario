@@ -1,10 +1,7 @@
 <?php
 session_start();
 
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 require_once BASE_PATH.'MODELO/libreria_conexionesBD/ConexionBDD.class.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){

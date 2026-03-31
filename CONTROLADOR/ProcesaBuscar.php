@@ -1,9 +1,6 @@
 <?php
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
-// include_once BASE_PATH.'libreria_php/verFormulario.php';
 
 function Convertir_otras_caracteristicas() {
     return [

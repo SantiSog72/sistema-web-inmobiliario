@@ -1,9 +1,7 @@
 <?php
 session_start();
 
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 require_once BASE_PATH.'MODELO/Inmueble.class.php';
 require_once BASE_PATH.'MODELO/Foto.class.php';
 require_once BASE_PATH.'MODELO/Ubicacion.class.php';
@@ -113,21 +111,6 @@ if ($operacion instanceof Alquiler){
     $conexion -> ingresar_opciones_financiacion($id_operacion, $operacion -> get_opcion_financiacion());
 }
 echo"<script>alert('La operacion se registro con exito')</script>";
-echo"<script>window.location.href =`/sistema%20web%20inmobiliario/VISTA/gestion_administrador.php`;</script>";
-
-
-// print_r($operacion);
-
-// header('Content-Type: application/json');
-// echo json_encode([
-//     "estado" => "ok",
-//     "mensaje" => "Operación creada",
-//     "detalle" => $operacion // Asegúrate de que tus clases tengan propiedades públicas o implementen JsonSerializable
-// ]);
-// exit;
-
-
-
-// // mostrar_info_formulario();
+echo "<script>window.location.href = '" . WEB_ROOT . "VISTA/gestion_administrador.php';</script>";
 
 ?>

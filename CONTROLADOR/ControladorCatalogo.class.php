@@ -1,9 +1,7 @@
 <?php
 // rel: (se toma desde donde se llama) a pesar de estar ubicado en controlador, toma desde donde esta el archivo index
 // abs: se toma desde el inicio del direcotrio xamp
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 require_once BASE_PATH.'MODELO/Inmueble.class.php';
 require_once BASE_PATH.'MODELO/Foto.class.php';
 require_once BASE_PATH.'MODELO/Ubicacion.class.php';

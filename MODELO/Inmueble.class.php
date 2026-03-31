@@ -1,7 +1,7 @@
 <?php
-
-require_once 'Foto.class.php';
-require_once 'Ubicacion.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
+require_once BASE_PATH.'MODELO/Foto.class.php';
+require_once BASE_PATH.'MODELO/Ubicacion.class.php';
 
 class Inmueble {
 	

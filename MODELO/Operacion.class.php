@@ -1,5 +1,6 @@
 <?php
-require_once 'Inmueble.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
+require_once BASE_PATH.'MODELO/Inmueble.class.php';
 abstract class Operacion {
 
     private int $nro_operacion;

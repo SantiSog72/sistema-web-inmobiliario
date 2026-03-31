@@ -1,3 +1,5 @@
+const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
+
 function expandir_foto (img){
     const ventana = new Ventana_emergente("ventana_foto", 800, 800);
 
@@ -16,12 +18,12 @@ function ventana_mensaje(nro_inmueble, titulo) {
     const ventana = new Ventana_emergente("ventana_contacto", 600, 700);
     const nuevaVentana = ventana.new_window;
     const doc = nuevaVentana.document;
-    const BASE_PATH = "/sistema%20web%20inmobiliario";
+
 
     const html_head = `
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="${BASE_PATH}/VISTA/css/index.css">
-        <link rel="stylesheet" href="${BASE_PATH}/VISTA/css/formulario_estilos.css">
+        <link rel="stylesheet" href="${raiz}VISTA/css/index.css">
+        <link rel="stylesheet" href="${raiz}VISTA/css/formulario_estilos.css">
         <title>Contacto por: ${titulo}</title>
     `;
 
@@ -78,7 +80,7 @@ function ventana_mensaje(nro_inmueble, titulo) {
             const datos = new FormData(this);
             
             try {
-                const respuesta = await fetch('${BASE_PATH}/CONTROLADOR/ProcesaEnvioMensaje.php', {
+                const respuesta = await fetch('${raiz}CONTROLADOR/ProcesaEnvioMensaje.php', {
                     method: 'POST',
                     body: datos
                 });
