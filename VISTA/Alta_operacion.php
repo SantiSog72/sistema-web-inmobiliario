@@ -8,9 +8,11 @@
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina Alta Operacion inmobiliaria">
 
-<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
 <script type="text/javascript" src ="javascript/renderizadores.js"></script>
-
+<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
+<script type="text/javascript" src ="javascript/ValidadorAltaOperacion.js"></script> 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
 		const formulario = document.getElementById('id_formulario_registro_operacion');
@@ -228,7 +230,7 @@
                     <span class="form_grupo">
                         <label class="label" for="id_coordenadas_longitud">coordenadas longitud: </label>                   
                         <input id="id_coordenadas_longitud" type="text" name="coordenadas_longitud_inmueble" value ="123" placeholder="Ingrese la coordenadas_longitud del inmueble">
-                        <label class="label" for="id_coordenadas_longitud">coordenadas latitud: </label>                   
+                        <label class="label" for="id_coordenadas_latitud">coordenadas latitud: </label>                   
                         <input id="id_coordenadas_latitud" type="text" name="coordenadas_latitud_inmueble" value="456" placeholder="Ingrese la coordenadas_latitud del inmueble">
                     <span id="error_coordenadas_inmueble" class="error"></span>
 
@@ -254,8 +256,8 @@
 				
 				<fieldset class = "fieldset" name="acciones_botones">
 					<legend class = "legend" >acciones</legend>		
-					<button id="id_envio" class="boton" type ="submit">crear publicacion</button>
-					<button id="id_cancelar" class="boton" type ="reset">cancelar</button>
+					<button id="id_envio" class="boton" type ="button" onclick="enviar_formulario ()">crear publicacion</button>
+					<button id="id_cancelar" class="boton" type ="button" onclick="borrar()">cancelar</button>
 				</fieldset>
 				
 			</form>

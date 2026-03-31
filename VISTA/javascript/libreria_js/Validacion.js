@@ -216,8 +216,27 @@ class Validacion {
 		}
 		return {valido: true};
 	}
-	
-	// }
+
+	static coordenada(campo_coordenada) {
+		// Expresión regular: 
+		// ^-?            : Puede empezar con un signo menos opcional
+		// \d{1,3}        : De 1 a 3 dígitos enteros
+		// (\.\d{1,7})?   : Un punto seguido de 1 a 7 dígitos decimales (opcional)
+		// $              : Fin de la cadena
+		const regexCoordenada = /^-?\d{1,3}(\.\d{1,7})?$/;
+
+		if (campo_coordenada.value === "") {
+			return { valido: false, error: "La coordenada es obligatoria" };
+		}
+
+		if (!regexCoordenada.test(campo_coordenada.value)) {
+			return { 
+				valido: false, 
+				error: "Formato inválido. Use hasta 3 enteros y 7 decimales (ej: -123.4567890)" 
+			};
+		}
+		return { valido: true };
+	}
 	// cada validacion:
 		// onblur:			
 			// realizar validacion (true/false)
