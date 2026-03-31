@@ -120,7 +120,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <!-- con el onload trae todo el catalogo para mostrar -->
 <body> 
 	<header>
-	<h1>Sistema Informacion Inmoviliaria</h1>
+	<h1>Sistema Informacion Inmobiliaria</h1>
 	<nav class="contenedor_mapa">
 		<button class= "boton" onclick="ir_singIn();">Iniciar sesion</button>
 		<button class= "boton" onclick="ir_singUp();">registrarse</button>
