@@ -1,13 +1,25 @@
+/* mapas.css */
 .contenedor_mapa{
     height:400px;
     width: 100%;
 }
 
-.mapa_general{
-    
-}
-
 .mapas_pequenos{
     height:400px;
     width:60%;
+}
+
+nav.contenedor_mapa {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    height: auto; /* Quitamos los 400px fijos si es solo nav */
+    padding-bottom: 10px;
+}
+
+#id_mapa_div {
+    border-radius: 12px;
+    margin: 0 20px 20px 20px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }

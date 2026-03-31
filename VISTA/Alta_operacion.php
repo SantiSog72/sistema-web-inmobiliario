@@ -8,8 +8,8 @@
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina Alta Operacion inmobiliaria">
 
-<script type="text/javascript" src ="javascript/renderizadores.js"></script>
 <script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="javascript/renderizadores.js"></script>
 <script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
 <script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
 <script type="text/javascript" src ="javascript/ValidadorAltaOperacion.js"></script> 
@@ -66,44 +66,6 @@
             }
         });
 
-		//CARGA POR BÚSQUEDA: Se ejecuta al enviar el formulario
-		// formulario.addEventListener('submit', async function(evento) {
-        //     evento.preventDefault(); // Evita la recarga de la página
-
-        //     // 1. Recolectamos TODOS los datos (incluye archivos)
-        //     const datos = new FormData(formulario);
-
-        //     try {
-        //         // 2. Enviamos los datos al servidor mediante fetch
-        //         const respuesta = await fetch('../CONTROLADOR/ProcesaAltaOperacion.php', {//argumentos
-        //             method: 'POST',
-        //             body: datos // Enviamos el FormData directamente
-        //         });
-
-        //         // 3. Verificamos la respuesta
-        //         if (respuesta.ok) {
-        //             const resultado = await respuesta.text(); // O .json() si tu PHP devuelve JSON
-        //             console.log("Servidor dice:", resultado);
-        //             alert("Operación procesada con éxito");
-                    
-        //             // Opcional: limpiar el formulario tras el éxito
-        //             // formulario.reset();
-        //             // document.getElementById('lista_nombres').innerHTML = '<li>Aun no hay archivos seleccionados.</li>';
-        //         } else {
-        //             console.error("Error en el servidor:", respuesta.status);
-        //             alert("Hubo un error al procesar el formulario.");
-        //         }
-        //     } catch (error) {
-        //         console.error("Error de red o conexión:", error);
-        //         alert("No se pudo conectar con el servidor.");
-        //     }
-        // });
-
-		// formulario.addEventListener('reset', async function(){
-		// 	// localStorage.removeItem("catalogo_actual");
-		// 	// cargarCatalogo();
-		// })
-
 	});
 
 </script>
@@ -128,7 +90,7 @@
 
                     <span class="form_grupo">
                         <label class="label" for="id_titulo_publicacion">Título Publicación: </label>                   
-                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
+                        <input id="id_titulo_publicacion" type="text" name="Titulo Publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
                         <span id="error_titulo_publicacion" class="error"></span>
                     </span>
 
@@ -257,7 +219,7 @@
 				<fieldset class = "fieldset" name="acciones_botones">
 					<legend class = "legend" >acciones</legend>		
 					<button id="id_envio" class="boton" type ="button" onclick="enviar_formulario ()">crear publicacion</button>
-					<button id="id_cancelar" class="boton" type ="button" onclick="borrar()">cancelar</button>
+					<button id="id_cancelar" class="boton" type ="button" onclick="ir_gestionAdministrador()">cancelar</button>
 				</fieldset>
 				
 			</form>

@@ -39,18 +39,41 @@ if (!defined('BASE_PATH')) {
 			}
 		}
 
+		// async function cargarMensajes() {
+		// 	try {
+		// 		const respuesta = await fetch('../CONTROLADOR/ProcesaTraerMensajes.php');
+		// 		const lista_mensajes = await respuesta.json();
+		// 		//if hay no vistos
+		// 		if (lista_mensajes){
+		// 			renderizar_mensajesJSON (lista_mensajes);
+		// 		}else{
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Error al cargar los mensajes:", error);
+		// 		contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
+		// 	}
+		// }
+
 		async function cargarMensajes() {
 			try {
 				const respuesta = await fetch('../CONTROLADOR/ProcesaTraerMensajes.php');
 				const lista_mensajes = await respuesta.json();
-				//if hay no vistos
-				if (lista_mensajes){
-					renderizar_mensajesJSON (lista_mensajes);
-				}else{
+				
+				const indicador = document.getElementById('mensajes_nuevos');
+				contador_mensajes_nuevos = 0;
+				lista_mensajes_nuevos = lista_mensajes.filter(mensaje => !mensaje.visto);
+				lista_mensajes_vistos = lista_mensajes.filter(mensaje => mensaje.visto);
+				
+				if (lista_mensajes_nuevos && lista_mensajes_nuevos.length > 0) {
+					indicador.innerHTML = `Tienes <strong>${lista_mensajes_nuevos.length}</strong> mensajes nuevos.`;
+					indicador.className = "notificacion_activa"; // Agregale estilo en CSS
+					renderizar_mensajesJSON(lista_mensajes_nuevos, "id_contenedor_mensajes_nuevos");
+				} else {
+					indicador.textContent = "No hay mensajes nuevos.";
 				}
+				renderizar_mensajesJSON(lista_mensajes_vistos, "id_contenedor_mensajes_vistos");
 			} catch (error) {
 				console.error("Error al cargar los mensajes:", error);
-				contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
 			}
 		}
 
@@ -211,6 +234,8 @@ if (!defined('BASE_PATH')) {
 		<section class="seccion_mensajes">
 			<h2 class="titulo_de_contenedor">mensajes</h2>
 			<div id="id_contenedor_mensajes" class="contenedor_mensajes">
+				<div id="id_contenedor_mensajes_nuevos" class="contenedor_mensajes"></div>
+				<div id="id_contenedor_mensajes_vistos" class="contenedor_mensajes"></div>
 			</div>
 		</section>
 	</main>

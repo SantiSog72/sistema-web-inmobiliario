@@ -63,6 +63,7 @@ function renderizarMasInfo(item) {
         </div>
     `;
     agregar_elemento_despues_de(htmlMasInfo, id_contenedor);
+
 }
 
 function renderizarMisTarjetasJSON(listaInmuebles) {
@@ -135,13 +136,13 @@ function crear_boton (clase, item, texto){
     return boton;
 }
 
-function renderizar_mensajesJSON (lista_mensajes){
-    limpiar_contenedor('id_contenedor_mensajes');
+function renderizar_mensajesJSON (lista_mensajes, id_contenedor){
+    limpiar_contenedor(id_contenedor);
     const mi_catalogo_txt = localStorage.getItem("mi_catalogo");
     const lista_catalogo = JSON.parse(mi_catalogo_txt);
 
     if (lista_mensajes.length === 0) {
-        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", id_contenedor);
         return;
     }
     
@@ -165,7 +166,7 @@ function renderizar_mensajesJSON (lista_mensajes){
             </div>
         `;
         
-        agregar_elemento_final(htmlTarjeta, 'id_contenedor_mensajes');
+        agregar_elemento_final(htmlTarjeta, id_contenedor);
     });
 
 }

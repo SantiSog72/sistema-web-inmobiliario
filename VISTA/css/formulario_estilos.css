@@ -1,4 +1,4 @@
-
+/* formulario_estilos.css */
 
 .contenedor_formulario{
 	display:flex;
@@ -102,4 +102,131 @@ option {
 
 .tarjeta_operacion{
 	display:flex;
+}
+
+.contenedor_catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Diseño de la tarjeta individual */
+.tarjeta_operacion {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta_operacion:hover {
+    transform: translateY(-5px);
+}
+
+.tarjeta_contenido {
+    padding: 15px;
+}
+
+.tarjeta_contenido h3 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+.tarjeta_precio {
+    font-weight: bold;
+    color: #27ae60;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+button, .boton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button[type="reset"] {
+    background-color: #95a5a6;
+}
+
+button[type="reset"]:hover {
+    background-color: #7f8c8d;
+}
+
+.fieldset {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background: white;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.legend {
+    background: #3498db;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;s
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* Contenedor principal de gestión */
+.section_catalogo, .seccion_mensajes {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Títulos de sección estilo Admin */
+.titulo_de_contenedor {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+/* Botones de acción específicos */
+.boton_alquilar { background-color: #27ae60; }
+.boton_vender { background-color: #2ecc71; }
+.boton_gestion_pagos { background-color: #f1c40f; color: black; }
+.boton_eliminar_publicacion { 
+    background-color: #e74c3c; 
+    float: right; /* Lo separa del resto */
+}
+
+/* Estilo para los mensajes */
+.tarjeta_mensaje {
+    border-left: 5px solid #3498db;
+    background: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
 }
