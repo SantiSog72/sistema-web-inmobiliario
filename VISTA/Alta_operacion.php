@@ -90,7 +90,7 @@
 
                     <span class="form_grupo">
                         <label class="label" for="id_titulo_publicacion">Título Publicación: </label>                   
-                        <input id="id_titulo_publicacion" type="text" name="Titulo Publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
+                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
                         <span id="error_titulo_publicacion" class="error"></span>
                     </span>
 

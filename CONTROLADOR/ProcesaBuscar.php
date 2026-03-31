@@ -49,7 +49,6 @@ if (is_array($catalogo_a_procesar)){
     foreach ($catalogo_a_procesar as $operacion) {
         $inmueble = $operacion->get_inmueble();
 
-        // 1. Convertir fotos a array
         $fotos_array = [];
         foreach ($inmueble->get_fotos() as $foto) {
             $fotos_array[] = [
@@ -59,7 +58,7 @@ if (is_array($catalogo_a_procesar)){
             ];
         }
 
-        // 2. Definir atributos según la instancia
+        //atributos según la instancia
         $atributos_unicos = [];
         if ($operacion instanceof Alquiler){
             $atributos_unicos = [
@@ -101,21 +100,13 @@ if (is_array($catalogo_a_procesar)){
             ]
         ];
 
-        // 4. COMBINAMOS TODO
-        // array_merge une los dos arrays en uno solo
         $datos_json[] = array_merge($bloque_base, $atributos_unicos);
     }
 }
 
-// // ... después del bucle foreach ...
 
-// 1. Definimos la cabecera para que el navegador sepa que es JSON
 header('Content-Type: application/json');
-// 2. "Echamos" (imprimimos) el JSON. 
-// Si $datos_json está vacío, imprimirá "[]", que es un JSON válido.
 echo json_encode($datos_json);
-// 3. Importante: Terminamos la ejecución para que no se cuele 
-// ningún espacio o HTML extra después.
 exit;
 
 

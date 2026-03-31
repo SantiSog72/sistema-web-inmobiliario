@@ -25,45 +25,70 @@ function renderizarTarjetasJSON(listaInmuebles) {
     });
 }
 
-function renderizarMasInfo(item) {
-    // elemento_a_expandir = document.getElementById(item.id_operacion); //la etiqueta tiene el id de su objeto
-    id_contenedor=`${item.id_operacion},${item.tipo}`;
-    const htmlMasInfo = `
-        <div class="mas_info">
-            <h3>${item.titulo} - ${item.tipo}</h3>
-            <h4>descipcion<h4>
-            <p>${item.inmueble.descripcion}</p>
-            <p>Zona: ${item.inmueble.ubicacion.zona} </p>
-            <p>Direccion: ${item.inmueble.ubicacion.direccion}</p>
-            <button id="id_boton_ver_en_el_mapa" onclick="accederMapaCoordenadas(${item.inmueble.ubicacion.coordenadas_latitud}, ${item.inmueble.ubicacion.coordenadas_longitud});">ver en el mapa</button>
-            ${item.tipo === 'Venta' ? `
-                <div class="seccion_venta">
-                    <p>Apto crédito hipotecario: ${item.apto_credito ? 'Sí' : 'No'}</p>
-                    <h4>Opciones de financiación:</h4>
-                    <ul>
-                        ${(item.financiacion && item.financiacion.length > 0) ? item.financiacion.map(
-                            opcion => `<li>(${opcion.cod_financiacion})- ${opcion.titulo_opcion_financiacion}</li>`).join('') : '<li>No posee</li>'}
-                    </ul>
-                </div>
-            ` : `
-                <div class="seccion_alquiler">
-                    <p>Plazo del contrato: ${item.plazo} meses</p>
-                    <p>Amoblado: ${item.esta_amoblado ? 'Sí' : 'No'}</p>
-                </div>
-            `}
-            <p>Precio: ${item.precio}</p>
 
-            <h4>fotos del inmueble:</h4>
-            <div class="contenedor_fotos">
-                ${(item.inmueble.lista_fotos && item.inmueble.lista_fotos.length > 0) ? item.inmueble.lista_fotos.map(foto => `
-                    <img class="foto_galeria" src="${foto.path}" alt="imagen de ${foto.nombre_foto}" onclick="expandir_foto(this)">
-                `).join(''):"El inmueble no tiene fotos"}
+
+function renderizarMasInfo(item) {
+    const id_contenedor = `${item.id_operacion},${item.tipo}`;
+    
+    const htmlMasInfo = `
+        <div class="mas_info_container">
+            <div class="mas_info_header">
+                <h3>${item.titulo}</h3>
+                <span class="badge_precio">$${item.precio}</span>
             </div>
-            <button class="buton envio_mensaje" type ="buton" onclick ="ventana_mensaje(${item.inmueble.nro_inmueble},\'${item.titulo}\')">enviar menasje</button>
+
+            <div class="mas_info_grid">
+                <div class="info_col">
+                    <p class="info_item"><strong>📍 Ubicación:</strong> ${item.inmueble.ubicacion.zona} (${item.inmueble.ubicacion.direccion})</p>
+                    <p class="info_item"><strong>🏠 Operación:</strong> ${item.tipo}</p>
+                    
+                    ${item.tipo === 'Venta' ? `
+                        <div class="seccion_tipo_especifica venta_box">
+                            <p><strong>💳 Apto Crédito:</strong> ${item.apto_credito ? '✅ Sí' : '❌ No'}</p>
+                            <p><strong>Financiación:</strong></p>
+                            <ul class="lista_finanzas">
+                                ${(item.financiacion && item.financiacion.length > 0) ? 
+                                    item.financiacion.map(op => `<li>• ${op.titulo_opcion_financiacion}</li>`).join('') 
+                                    : '<li>No posee</li>'}
+                            </ul>
+                        </div>
+                    ` : `
+                        <div class="seccion_tipo_especifica alquiler_box">
+                            <p><strong>⏳ Plazo:</strong> ${item.plazo} meses</p>
+                            <p><strong>🛋️ Amoblado:</strong> ${item.esta_amoblado ? '✅ Sí' : '❌ No'}</p>
+                        </div>
+                    `}
+                    
+                    <div class="descripcion_texto">
+                        <h4>Descripción</h4>
+                        <p>${item.inmueble.descripcion}</p>
+                    </div>
+
+                    <div class="botones_accion">
+                        <button class="boton_mapa" onclick="accederMapaCoordenadas(${item.inmueble.ubicacion.coordenadas_latitud}, ${item.inmueble.ubicacion.coordenadas_longitud});">
+                            📍 Ver Mapa
+                        </button>
+                        <button class="boton_mensaje" onclick="ventana_mensaje(${item.inmueble.nro_inmueble}, '${item.titulo}')">
+                            ✉️ Enviar Mensaje
+                        </button>
+                    </div>
+                </div>
+
+                <div class="galeria_col">
+                    <h4>Fotos</h4>
+                    <div class="contenedor_fotos_grid">
+                        ${(item.inmueble.lista_fotos && item.inmueble.lista_fotos.length > 0) ? 
+                            item.inmueble.lista_fotos.map(foto => `
+                                <img class="foto_galeria_mini" src="${foto.path}" alt="Inmueble" onclick="expandir_foto(this)">
+                            `).join('') : "<p>Sin fotos disponibles</p>"}
+                    </div>
+                </div>
+            </div>
         </div>
     `;
+    
+    // Si ya existe un "mas_info" abierto, lo ideal sería borrarlo antes o validar
     agregar_elemento_despues_de(htmlMasInfo, id_contenedor);
-
 }
 
 function renderizarMisTarjetasJSON(listaInmuebles) {
@@ -93,15 +118,6 @@ function renderizarMisTarjetasJSON(listaInmuebles) {
 
         div.appendChild(p);
 
-        // let boton_mas_info = document.createElement("button");
-        // boton_mas_info.setAttribute("class", "boton boton_mas_info");
-        // boton_mas_info.setAttribute("type", "button");
-        // boton_mas_info.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
-        // boton_mas_info.textContent = "más info";
-        
-        // div.appendChild(boton_mas_info);
-
-        
 
         //crea etiquetaas unicas
         if (item.disponible){

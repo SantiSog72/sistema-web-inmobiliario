@@ -60,7 +60,8 @@ if (!defined('BASE_PATH')) {
 				const lista_mensajes = await respuesta.json();
 				
 				const indicador = document.getElementById('mensajes_nuevos');
-				contador_mensajes_nuevos = 0;
+
+				let contador_mensajes_nuevos = 0;
 				lista_mensajes_nuevos = lista_mensajes.filter(mensaje => !mensaje.visto);
 				lista_mensajes_vistos = lista_mensajes.filter(mensaje => mensaje.visto);
 				
@@ -79,55 +80,6 @@ if (!defined('BASE_PATH')) {
 
 		cargarCatalogo(); 
 		cargarMensajes(); 
-
-		
-
-		// formulario.addEventListener('submit', async function(evento) {
-		// 	evento.preventDefault(); //evita que se recargue la pagina (que se envie el formulario)
-		// 	const datos = new FormData(formulario);//recolecta la informacion del formulario que se estaba por enviar
-		// 	const params = new URLSearchParams(datos).toString();//transforma la info del formualrio a un string para el servidor
-		// 	//en un formato que el servidor entiede
-			
-		// 	cargarCatalogo(params);
-		// });
-
-		// formulario.addEventListener('reset', async function(){
-		// 	localStorage.removeItem("mi_catalogo");
-		// 	cargarCatalogo();
-		// })
-
-		//evento del mas-info
-		// contenedor.addEventListener("click", function(evento) {
-		// 	if (evento.target.classList.contains('boton_mas_info')) {
-		// 		// 1. Obtenemos los datos del botón
-		// 		const idOperacion_tipoOperacion = evento.target.getAttribute('data-id');
-		// 		const [idOperacion, tipoOperacion] = idOperacion_tipoOperacion.split(",");
-
-		// 		// 2. Buscamos en localStorage
-		// 		const lista_catalogo_str = localStorage.getItem("mi_catalogo");
-				
-		// 		if (lista_catalogo_str) {
-		// 			const lista_catalogo = JSON.parse(lista_catalogo_str);
-
-		// 			// 3. Usamos .find() para recuperar el objeto directamente
-		// 			// Importante: Asegúrate de que idOperacion sea del mismo tipo (número o string)
-		// 			const operacion_seleccionada = lista_catalogo.find(item => 
-		// 				item.tipo === tipoOperacion && item.id_operacion == idOperacion
-		// 			);
-
-		// 			if (operacion_seleccionada) {
-		// 				console.log("Operación encontrada:", operacion_seleccionada);
-		// 				renderizarMasInfo(operacion_seleccionada);
-		// 			} else {
-		// 				console.warn("No se encontró la operación con ID:", idOperacion);
-		// 			}
-		// 		} else {
-		// 			console.error("No se encontró catálogo en local storage");
-		// 		}
-		// 	}
-		// });
-
-
 	});
 
 </script>
@@ -142,7 +94,7 @@ if (!defined('BASE_PATH')) {
 	<header>
 	<h1>Gestion de Inmuebles</h1>
 	<nav class="contenedor_mapa">
-		<button class= "boton" onclick="">Log out</button>
+		<button class= "boton" onclick="ir_index()">Log out</button>
 		<button class= "boton" onclick="ir_AltaOperacion()">Alta Operacion</button>
 		<span>
 		</span>
@@ -232,9 +184,10 @@ if (!defined('BASE_PATH')) {
 		</section>
 
 		<section class="seccion_mensajes">
-			<h2 class="titulo_de_contenedor">mensajes</h2>
 			<div id="id_contenedor_mensajes" class="contenedor_mensajes">
+				<h2 id="id_titulo_mensajes_nuevos" class="titulo_de_contenedor"> Mensajes Nuevos</h2>
 				<div id="id_contenedor_mensajes_nuevos" class="contenedor_mensajes"></div>
+				<h2 id="id_titulo_mensajes_vistos" class="titulo_de_contenedor">Mensajes Vistos</h2>
 				<div id="id_contenedor_mensajes_vistos" class="contenedor_mensajes"></div>
 			</div>
 		</section>

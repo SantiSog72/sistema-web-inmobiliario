@@ -79,8 +79,8 @@ if (!defined('BASE_PATH')) {
 				
 				<fieldset class = "fieldset field_acciones" name="acciones_botones">
 					<button id="id_envio" class="boton" type ="submit">ingresar</button>
-					<button id="id_borrar" class="boton" type ="reset">borrar</button>
 					<button id="id_registrarse" class="boton" type ="button" onclick = "ir_singUp();">registrarse</button>
+					<button id="id_borrar" class="boton" type ="button" onclick="ir_index();">atras</button>
 				</fieldset>
 				
 			</form>

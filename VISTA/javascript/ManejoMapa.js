@@ -27,7 +27,7 @@ function generoMapa(lat, lng, zoom) {
 
 function crearMarcadores() {
     var miIcono = L.icon({
-        iconUrl: 'imagenes/iconos/icono_casa_negro.png',
+        iconUrl: '/sistema%20web%20inmobiliario/imagenes/iconos/icono_casa_negro.png',
         iconSize: [38, 38],
         iconAnchor: [19, 38],
         popupAnchor: [0, -38]

@@ -230,3 +230,78 @@ header h1 {
     margin-bottom: 15px;
     border-radius: 4px;
 }
+
+.mas_info_container {
+    background: #ffffff;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    margin: 15px 0;
+    padding: 20px;
+    animation: fadeIn 0.3s ease; /* Pequeño efecto al aparecer */
+}
+
+.mas_info_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.badge_precio {
+    background: #27ae60;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.mas_info_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .mas_info_grid { grid-template-columns: 1fr; } /* En móviles una sola columna */
+}
+
+.seccion_tipo_especifica {
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.venta_box { background: #e8f4fd; border-left: 4px solid #3498db; }
+.alquiler_box { background: #fef9e7; border-left: 4px solid #f1c40f; }
+
+.contenedor_fotos_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+}
+
+.foto_galeria_mini {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.foto_galeria_mini:hover { transform: scale(1.1); }
+
+.botones_accion {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
