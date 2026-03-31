@@ -1,6 +1,6 @@
 <?php
 // Esto busca el archivo desde la raíz de tu htdocs/www
-require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
 // Ahora puedes usar las constantes en cualquier parte de la página:
 require_once BASE_PATH . 'CONTROLADOR/ControladorCatalogo.class.php';

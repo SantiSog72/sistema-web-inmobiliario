@@ -1,6 +1,6 @@
 <?php
 // Esto busca el archivo desde la raíz de tu htdocs/www
-require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
