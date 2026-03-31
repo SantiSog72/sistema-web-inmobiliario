@@ -1,5 +1,6 @@
-const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
-
+if (typeof raiz === 'undefined') {
+    window.raiz = (window.BASE_URL || "/sistema_web_inmobiliario/").replace(/\/$/, "") + "/";
+}
 function renderizarTarjetasJSON(listaInmuebles) {
     limpiar_contenedor('id_contenedor_catalogo');
 

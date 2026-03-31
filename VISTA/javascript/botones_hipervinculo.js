@@ -1,6 +1,7 @@
 // Usamos la variable global definida en el PHP. 
-const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
-
+if (typeof raiz === 'undefined') {
+    window.raiz = (window.BASE_URL || "/sistema_web_inmobiliario/").replace(/\/$/, "") + "/";
+}
 function ir_index(){
     window.location.href = `${raiz}index.php`;  
 }

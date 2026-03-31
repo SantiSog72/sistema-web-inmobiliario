@@ -1,5 +1,6 @@
-const raiz = window.BASE_URL || "/sistema_web_inmobiliario/";
-
+if (typeof raiz === 'undefined') {
+    window.raiz = (window.BASE_URL || "/sistema_web_inmobiliario/").replace(/\/$/, "") + "/";
+}
 function expandir_foto (img){
     const ventana = new Ventana_emergente("ventana_foto", 800, 800);
 
