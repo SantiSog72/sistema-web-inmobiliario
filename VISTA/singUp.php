@@ -74,7 +74,7 @@
 
 
 				<fieldset class = "fieldset" name="datos contacto">
-                    <legend class = "legend" >Ingreso Datos de Sesion</legend>
+                    <legend class = "legend" >Ingreso Datos de Contacto</legend>
 					
 					<span class="form_grupo">
                         <label class ="label" for ="id_email">email: </label>						

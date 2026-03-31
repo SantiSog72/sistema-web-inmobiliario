@@ -98,7 +98,7 @@ if (!defined('BASE_PATH')) {
 		<button class= "boton" onclick="ir_AltaOperacion()">Alta Operacion</button>
 		<span>
 		</span>
-		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa Catalogo Completo</button>
+		<button class= "boton" onclick="iniciar_mapa_inmuebles()">Mapa de Mi Catalogo</button>
 		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
 	</nav>
 	
