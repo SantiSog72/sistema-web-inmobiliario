@@ -1,9 +1,9 @@
 <?php
 
-// Define la ruta base del proyecto
-define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+}
 
-// require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,7 +28,7 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 		// 1. Función para obtener y mostrar datos
 		async function cargarCatalogo() {
 			try {
-				const url = '/CONTROLADOR/ProcesaMisInmuebles.php';
+				const url = '../CONTROLADOR/ProcesaMisInmuebles.php';
 				const respuesta = await fetch(url);
 				const lista_inmuebles = await respuesta.json();
 				localStorage.setItem("mi_catalogo", JSON.stringify(lista_inmuebles));
@@ -39,22 +39,23 @@ define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 			}
 		}
 
-		// async function cargarMensajes() {
-		// 	try {
-		// 		const respuesta = await fetch('${BASE_PATH}/CONTROLADOR/ProcesaMisInmuebles.php');
-		// 		const mensajes = await respuesta.json();
-		// 		//if hay no vistos
-		// 		if (mensajes){
-		// 			renderizar_mensajesJSON (mensajes);
-		// 		}
-		// 	} catch (error) {
-		// 		console.error("Error al cargar los mensajes:", error);
-		// 		contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
-		// 	}
-		// }
+		async function cargarMensajes() {
+			try {
+				const respuesta = await fetch('../CONTROLADOR/ProcesaTraerMensajes.php');
+				const lista_mensajes = await respuesta.json();
+				//if hay no vistos
+				if (lista_mensajes){
+					renderizar_mensajesJSON (lista_mensajes);
+				}else{
+				}
+			} catch (error) {
+				console.error("Error al cargar los mensajes:", error);
+				contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
+			}
+		}
 
 		cargarCatalogo(); 
-		// cargarMensajes(); 
+		cargarMensajes(); 
 
 		
 

@@ -137,7 +137,6 @@ function crear_boton (clase, item, texto){
 
 function renderizar_mensajesJSON (lista_mensajes){
     limpiar_contenedor('id_contenedor_mensajes');
-    limpiar_contenedor('id_contenedor_catalogo');
 
     if (lista_mensajes.length === 0) {
         agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
@@ -146,7 +145,6 @@ function renderizar_mensajesJSON (lista_mensajes){
 
     lista_mensajes.forEach(item => {
         // Armar tarjeta 
-        //se guarda el id del objeto y el tipo (se requieren los dos para identificar una operacion)
         const htmlTarjeta = `
             <div id="${item.nro_mensaje}" class="tarjeta_mensaje">
                 <p>titulo Propiedad: </p>

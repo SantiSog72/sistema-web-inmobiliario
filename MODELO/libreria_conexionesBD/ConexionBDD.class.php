@@ -304,8 +304,9 @@ class ConexionBDD {
     public function obtener_mensajes ($dni_usuario) {
         $consulta = $this -> conexion -> prepare("
             SELECT i.nro_inmueble, i.direccion, i.dni_usuario, m.nro_mensaje, m.fecha_hora,
-            m.nombre, m.apellido, m.email, m.nro_celular, m.Cuerpo_mensaje, m.visto
-            FROM mensaje m NATURAL JOIN inmueble i INNER JOIN usuario_administrador u
+           m.nombre, m.apellido, m.email, m.nro_celular, m.Cuerpo_mensaje, m.visto
+            FROM mensaje m 
+            NATURAL JOIN inmueble i 
             WHERE i.dni_usuario = ?
         ");
         
