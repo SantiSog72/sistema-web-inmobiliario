@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
@@ -12,8 +12,9 @@ require_once BASE_PATH.'MODELO/Alquiler.class.php';
 require_once BASE_PATH.'MODELO/Venta.class.php';
 require_once BASE_PATH.'MODELO/libreria_conexionesBD/ConexionBDD.class.php';
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION["usuario"])){
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $usuario_dni = $_SESSION["usuario"]["dni"];
 
     $lista_objetos_fotos = [];
     $directorio_destino = BASE_PATH . 'imagenes' . DIRECTORY_SEPARATOR;
@@ -60,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     $inmueble = new Inmueble(
         0,
+        $usuario_dni,
         $_POST['tipo_propiedad'],
         $_POST['descripcion_inmueble'],
         [
@@ -111,10 +113,11 @@ if ($operacion instanceof Alquiler){
     $id_operacion = $conexion -> ingresar_venta($operacion, $nro_inmueble);
     $conexion -> ingresar_opciones_financiacion($id_operacion, $operacion -> get_opcion_financiacion());
 }
+echo"<script>alert('La operacion se registro con exito')</script>";
+echo"<script>window.location.href =`/sistema%20web%20inmobiliario/VISTA/gestion_administrador.php`;</script>";
 
 
-
-print_r($operacion);
+// print_r($operacion);
 
 // header('Content-Type: application/json');
 // echo json_encode([

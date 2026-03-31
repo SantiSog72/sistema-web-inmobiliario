@@ -187,12 +187,12 @@ class ConexionBDD {
         }
     }
 
-    public function ingresar_inmueble($inmueble) {
+    public function ingresar_inmueble($inmueble, $usr_dni) {
         $consulta = $this->conexion->prepare("
         INSERT INTO inmueble 
-        (tipo_propiedad, descripcion, con_quincho, con_lavadero, 
+        (dni_usuario, tipo_propiedad, descripcion, con_quincho, con_lavadero, 
         con_patio, con_garage, cord_latitud, cord_longitud, direccion, zona)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         $caract    = $inmueble->get_otras_caracteristicas();
         $tipo      = $inmueble->get_tipo_propiedad();
@@ -206,8 +206,8 @@ class ConexionBDD {
         $direccion = $inmueble->get_ubicacion()->get_direccion();
         $zona      = $inmueble->get_ubicacion()->get_zona();
 
-        $consulta->bind_param("ssiiiissss",
-            $tipo, $desc, $quincho, $lavadero, $patio, $garage,
+        $consulta->bind_param("sssiiiissss",
+            $usr_dni, $tipo, $desc, $quincho, $lavadero, $patio, $garage,
             $lat, $lng, $direccion, $zona
         );
         $consulta->execute();

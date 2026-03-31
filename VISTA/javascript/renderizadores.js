@@ -92,13 +92,13 @@ function renderizarMisTarjetasJSON(listaInmuebles) {
 
         div.appendChild(p);
 
-        let boton_mas_info = document.createElement("button");
-        boton_mas_info.setAttribute("class", "boton boton_mas_info");
-        boton_mas_info.setAttribute("type", "button");
-        boton_mas_info.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
-        boton_mas_info.textContent = "más info";
+        // let boton_mas_info = document.createElement("button");
+        // boton_mas_info.setAttribute("class", "boton boton_mas_info");
+        // boton_mas_info.setAttribute("type", "button");
+        // boton_mas_info.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
+        // boton_mas_info.textContent = "más info";
         
-        div.appendChild(boton_mas_info);
+        // div.appendChild(boton_mas_info);
 
         
 
@@ -137,17 +137,25 @@ function crear_boton (clase, item, texto){
 
 function renderizar_mensajesJSON (lista_mensajes){
     limpiar_contenedor('id_contenedor_mensajes');
+    const mi_catalogo_txt = localStorage.getItem("mi_catalogo");
+    const lista_catalogo = JSON.parse(mi_catalogo_txt);
 
     if (lista_mensajes.length === 0) {
         agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
         return;
     }
-
+    
+    
     lista_mensajes.forEach(item => {
+        
+        let operacion = lista_catalogo.find(element => element.inmueble.nro_inmueble === item.nro_inmueble)
+        let titulo = operacion.titulo;
+        let tipo_operacion = operacion.tipo;
         // Armar tarjeta 
         const htmlTarjeta = `
             <div id="${item.nro_mensaje}" class="tarjeta_mensaje">
-                <p>titulo Propiedad: </p>
+                <p>Titulo Publicacion: ${titulo} </p>
+                <p>Tipo Operacion: ${tipo_operacion} </p>
                 <p>direccion: ${item.direccion} </p>
                 <p>Mensaje de: ${item.nombre} ${item.apellido}</p>
                 <p>Contacto: </p>
