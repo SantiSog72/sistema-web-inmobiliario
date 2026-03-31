@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION["usuario"])){
     
     $inmueble = new Inmueble(
         0,
-        $usuario_dni,
         $_POST['tipo_propiedad'],
         $_POST['descripcion_inmueble'],
         [
@@ -105,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION["usuario"])){
 }
 
 $conexion = ConexionBDD::getInstancia();
-$nro_inmueble = $conexion -> ingresar_inmueble($operacion -> get_inmueble());
+$nro_inmueble = $conexion -> ingresar_inmueble($operacion -> get_inmueble(), $usuario_dni);
 $conexion -> ingresar_fotos($operacion -> get_inmueble() -> get_fotos(), $nro_inmueble);
 if ($operacion instanceof Alquiler){
     $id_operacion = $conexion -> ingresar_alquiler($operacion, $nro_inmueble);
