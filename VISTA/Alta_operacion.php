@@ -1,5 +1,6 @@
 <?php
-
+// Esto busca el archivo desde la raíz de tu htdocs/www
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -7,12 +8,14 @@
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina Alta Operacion inmobiliaria">
-
-<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
-<script type="text/javascript" src ="javascript/renderizadores.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
-<script type="text/javascript" src ="javascript/ValidadorAltaOperacion.js"></script> 
+<script>
+    window.BASE_URL = "<?= WEB_ROOT ?>";
+</script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/renderizadores.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Validacion.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/ValidadorAltaOperacion.js"></script> 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
 		const formulario = document.getElementById('id_formulario_registro_operacion');
@@ -21,7 +24,7 @@
 
         // carga opciones de financiacion al iniciar
         async function cargar_opciones_financiacion() {
-            const respuesta = await fetch('../CONTROLADOR/ObtenerOpcionesFinanciacion.php');
+            const respuesta = await fetch('<?= WEB_ROOT ?>CONTROLADOR/ObtenerOpcionesFinanciacion.php');
             const opciones  = await respuesta.json();
 
             const contenedor = document.getElementById('contenedor_opciones_financiacion');
@@ -70,9 +73,9 @@
 
 </script>
 
-<link rel="stylesheet" href="css//index.css">
-<link rel="stylesheet" href="css/formulario_estilos.css">
-<link rel="stylesheet" href="css//index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css//index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/formulario_estilos.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css//index.css">
 
 <title>Alta Operacion inmobiliaria</title>
 </head>
@@ -83,7 +86,7 @@
 	</header>
 	<section>
 		<article class= "contenedor_formulario">
-			<form id="id_formulario_registro_operacion" class "formulario" name="formulario_registro_operacion" method="POST" enctype="multipart/form-data" action="../CONTROLADOR/ProcesaAltaOperacion.php">
+			<form id="id_formulario_registro_operacion" class "formulario" name="formulario_registro_operacion" method="POST" enctype="multipart/form-data" action="<?= WEB_ROOT ?>CONTROLADOR/ProcesaAltaOperacion.php">
 
                 <fieldset class = "fieldset" name="datos de la operacion">
                     <legend class = "legend" >Datos de la Operacion</legend>

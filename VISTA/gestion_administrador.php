@@ -1,9 +1,6 @@
 <?php
-
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
-
+// Esto busca el archivo desde la raíz de tu htdocs/www
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,14 +8,16 @@ if (!defined('BASE_PATH')) {
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina Gestion Administrador">
-
-<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
+<script>
+    window.BASE_URL = "<?= WEB_ROOT ?>";
+</script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script type="text/javascript" src ="javascript/ManejoMapa.js"></script>
-<script type="text/javascript" src ="javascript/renderizadores.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/Cookies.js"></script>
-<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/ManejoMapa.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/renderizadores.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Cookies.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/botones_hipervinculo.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
@@ -28,7 +27,7 @@ if (!defined('BASE_PATH')) {
 		// 1. Función para obtener y mostrar datos
 		async function cargarCatalogo() {
 			try {
-				const url = '../CONTROLADOR/ProcesaMisInmuebles.php';
+				const url = '<?= WEB_ROOT ?>CONTROLADOR/ProcesaMisInmuebles.php';
 				const respuesta = await fetch(url);
 				const lista_inmuebles = await respuesta.json();
 				localStorage.setItem("mi_catalogo", JSON.stringify(lista_inmuebles));
@@ -56,7 +55,7 @@ if (!defined('BASE_PATH')) {
 
 		async function cargarMensajes() {
 			try {
-				const respuesta = await fetch('../CONTROLADOR/ProcesaTraerMensajes.php');
+				const respuesta = await fetch('<?= WEB_ROOT ?>CONTROLADOR/ProcesaTraerMensajes.php');
 				const lista_mensajes = await respuesta.json();
 				
 				const indicador = document.getElementById('mensajes_nuevos');
@@ -84,8 +83,8 @@ if (!defined('BASE_PATH')) {
 
 </script>
 
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/formulario_estilos.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/formulario_estilos.css">
 
 <title>Pagina Gestion Administrador</title>
 </head>
@@ -113,69 +112,6 @@ if (!defined('BASE_PATH')) {
 	</div>
 	
 	<main>
-		<!-- <section id="id_filtros_busqueda">
-			<form id="id_formulario_busqueda" name="formulario_busqueda" method="GET">
-				<fieldset class="fieldset contenedor_formulario">
-					<legend class="legend">buscar inmuebles</legend>
-
-					<span class="form_grupo">
-					<label class ="label" for ="id_tipo_operacion">Tipo Operacion</label>
-					<select class="select" id="id_tipo_operacion" name="operacion" size="1">
-						<option class="option" value="alquiler" selected>Alquiler</option>
-						<option class="option" value="alquiler_amoblado">Alquiler Amueblado</option>
-						<option class="option" value="venta">Venta</option>
-					</select>
-					<span id="error_tipo_operacion" class="error"></span>
-					</span>	
-
-					<span class="form_grupo">
-						<label class ="label" for ="id_zona">Zona</label>
-						<select class="select" id="id_zona" name="zona" size="1">
-							<option class="option" value="zona_norte">Zona Norte</option>
-							<option class="option" value="zona_sur">Zona Sur</option>
-							<option class="option" value="zona_centro" selected>Zona Centro</option>
-							<option class="option" value="rada_tilly">Rada Tilly</option>
-						</select>
-						<span id="error_Zona" class="error"></span>
-					</span>
-
-					<span class="contenedor_checkbox_radio">
-						<p class="titulo_de_contenedor">Tipo Propiedad</p>
-						<input class="checkbox" type="checkbox" name="casa" value="1">
-						<label class="label">casa</label><br>
-						<input class="checkbox" type="checkbox" name="departamento" value="1">
-						<label class="label">departamento</label><br>
-						<input class="checkbox" type="checkbox" name="oficina" value="1">
-						<label class="label">oficina</label><br>
-						<input class="checkbox" type="checkbox" name="terreno" value="1">
-						<label class="label">terreno</label><br>
-						<input class="checkbox" type="checkbox" name="cochera" value="1">
-						<label class="label">cochera</label><br>
-						<span id="error_tipo_propiedad" class="error"></span>
-					</span>
-
-
-					<span class="contenedor_checkbox_radio">
-						<p class="titulo_de_contenedor">otras caracteristicas</p>
-						<input class="checkbox" type="checkbox" name="quincho" value="1">
-						<label class="label">quincho</label><br>
-						<input class="checkbox" type="checkbox" name="garage" value="1">
-						<label class="label">garage</label><br>
-						<input class="checkbox" type="checkbox" name="lavadero" value="1">
-						<label class="label">lavadero</label><br>
-						<input class="checkbox" type="checkbox" name="patio" value="1">
-						<label class="label">patio</label><br>
-						<span id="error_opciones" class="error"></span>
-					</span>
-					
-					<span class="form_grupo">
-						<button type="submit" id="id_buscar">buscar</button>
-						<button  type="reset" id="id_limpiar">quitar filtros</button>
-					</span>
-				</fieldset>
-
-			</form> 
-		</section> -->
 		
 		<section class="section_catalogo">
 			<h2 class="titulo_de_contenedor">mis inmuebles</h2>

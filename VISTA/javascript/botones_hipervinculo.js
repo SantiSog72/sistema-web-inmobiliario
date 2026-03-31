@@ -1,20 +1,22 @@
-const raiz = "/sistema%20web%20inmobiliario"; //despues cambiar el nombre del directorio base
+// Usamos la variable global definida en el PHP. 
+const raiz = window.BASE_URL || "/sistema%20web%20inmobiliario/";
+
 function ir_index(){
-    window.location.href =`${raiz}/index.php`;	
+    window.location.href = `${raiz}index.php`;  
 }
 
 function ir_singIn(){
-    window.location.href =`${raiz}/VISTA/singIn.php`;	
+    window.location.href = `${raiz}VISTA/singIn.php`;   
 }
 
 function ir_singUp(){
-    window.location.href =`${raiz}/VISTA/singUp.php`;	
+    window.location.href = `${raiz}VISTA/singUp.php`;   
 }
 
 function ir_AltaOperacion(){
-    window.location.href =`${raiz}/VISTA/Alta_operacion.php`;	
+    window.location.href = `${raiz}VISTA/Alta_operacion.php`;   
 }
 
 function ir_gestionAdministrador(){
-    window.location.href =`${raiz}/VISTA/gestion_administrador.php`;	
+    window.location.href = `${raiz}VISTA/gestion_administrador.php`;    
 }

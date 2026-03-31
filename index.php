@@ -1,13 +1,9 @@
 <?php
-// Define la ruta base del proyecto
-define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
+// Esto busca el archivo desde la raíz de tu htdocs/www
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
 
-require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
-// $ControladorCatalogo = new ControladorCatalogo();
-// $catalogo = $ControladorCatalogo -> get_lista_catalogo();
-// echo "<pre>";
-// var_dump($catalogo);
-// echo "</pre>";
+// Ahora puedes usar las constantes en cualquier parte de la página:
+require_once BASE_PATH . 'CONTROLADOR/ControladorCatalogo.class.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,16 +11,20 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina principal">
+<script>
+    // Creamos una variable global en el navegador con la ruta que ya calculó PHP
+    window.BASE_URL = "<?= WEB_ROOT ?>";
+</script>
 
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/Ventana_emergente.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/manejoVentanasEmergentes.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Ventana_emergente.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/manejoVentanasEmergentes.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/ManejoMapa.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/renderizadores.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/libreria_js/Cookies.js"></script>
-<script type="text/javascript" src ="VISTA/javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/ManejoMapa.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/renderizadores.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Cookies.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/botones_hipervinculo.js"></script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
@@ -38,7 +38,7 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 			try {
 				// Si hay parámetros agregamos el ?, si no, llamamos al archivo pelado
 				//la URL de un archivo del servidor que procesa los datos
-				const url = 'CONTROLADOR/ProcesaBuscar.php' + (parametros ? '?' + parametros : '');
+				const url = '<?= WEB_ROOT ?>CONTROLADOR/ProcesaBuscar.php' + (parametros ? '?' + parametros : '');
 				//se realiza el pedido al servidor
 				const respuesta = await fetch(url);
 				// console.log (respuesta);
@@ -111,8 +111,8 @@ require_once BASE_PATH.'CONTROLADOR/ControladorCatalogo.class.php';
 
 </script>
 
-<link rel="stylesheet" href="VISTA/css/index.css">
-<link rel="stylesheet" href="VISTA/css/formulario_estilos.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/formulario_estilos.css">
 <!-- <link rel="stylesheet" href="VISTA/css//mapas.css"> -->
 
 <title>Sistema Informacion Inmoviliaria</title>

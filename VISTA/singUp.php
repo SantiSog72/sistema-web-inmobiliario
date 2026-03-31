@@ -1,3 +1,7 @@
+<?php
+// Esto busca el archivo desde la raíz de tu htdocs/www
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -5,14 +9,16 @@
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina registro">
+<script>
+    window.BASE_URL = "<?= WEB_ROOT ?>";
+</script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Validacion.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/Validador_registro.js"></script> 
 
-<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
-<script type="text/javascript" src ="javascript/Validador_registro.js"></script> 
-
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/formulario_estilos.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/formulario_estilos.css">
 
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function (){
@@ -40,7 +46,7 @@
 	</header>
 	<section>
 		<article class= "contenedor_formulario">
-			<form id="id_fomr_registro" class "formulario" method="post" action="../CONTROLADOR/ProcesaRegistroUsuario.php">
+			<form id="id_fomr_registro" class "formulario" method="post" action="<?= WEB_ROOT ?>CONTROLADOR/ProcesaRegistroUsuario.php">
 				<fieldset class = "fieldset" name="datos sesion">
 					<legend class = "legend" >Ingreso Datos de Sesion</legend>
 					

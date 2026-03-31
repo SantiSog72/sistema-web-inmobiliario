@@ -1,21 +1,21 @@
 <?php
-// RUTA DE SERVIDOR (File System)
-// __DIR__ siempre apunta a la carpeta donde está este archivo config.php
+// 1. RUTA DE SERVIDOR (Para require e include en PHP)
+// __DIR__ nos da la ruta real en el disco (ej: C:\xampp\htdocs\sistema web inmobiliario\)
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 }
 
-// RUTA WEB (URL)
-// Detecta el protocolo (http/https) y el dominio
+// 2. RUTA WEB (Para el navegador: JS, CSS, Imágenes)
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
 
-// Calculamos la carpeta del proyecto basándonos en la ubicación de este archivo
-// Esto elimina la necesidad de escribir manualmente el nombre de la carpeta
-$project_folder = str_replace($_SERVER['DOCUMENT_ROOT'], '', str_replace('\\', '/', __DIR__));
-$project_folder = trim($project_folder, '/') . '/';
+// Detectamos la carpeta del proyecto dinámicamente
+// Esto convertirá "C:\xampp\htdocs\sistema web inmobiliario" en "/sistema web inmobiliario/"
+$folder = str_replace($_SERVER['DOCUMENT_ROOT'], '', str_replace('\\', '/', __DIR__));
+$folder = '/' . trim($folder, '/') . '/';
 
 if (!defined('WEB_ROOT')) {
-    define('WEB_ROOT', $protocol . $host . '/' . $project_folder);
+    // Usamos rawurldecode para asegurar que los espacios se traten correctamente si es necesario
+    define('WEB_ROOT', $protocol . $host . $folder);
 }
 ?>

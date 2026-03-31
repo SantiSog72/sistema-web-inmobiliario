@@ -1,7 +1,6 @@
 <?php
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-}
+// Esto busca el archivo desde la raíz de tu htdocs/www
+require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema web inmobiliario/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,11 +8,13 @@ if (!defined('BASE_PATH')) {
 <meta charset="UTF-8">
 <meta name="autor" content="Santiago Servin">
 <meta name="description" content="Pagina ingreso">
-
-<script type="text/javascript" src ="javascript/botones_hipervinculo.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/ubicador_elementos.js"></script>
-<script type="text/javascript" src ="javascript/libreria_js/Validacion.js"></script>
-<script type="text/javascript" src ="javascript/Validador_ingreso.js"></script>
+<script>
+    window.BASE_URL = "<?= WEB_ROOT ?>";
+</script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/botones_hipervinculo.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/ubicador_elementos.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/libreria_js/Validacion.js"></script>
+<script type="text/javascript" src ="<?= WEB_ROOT ?>VISTA/javascript/Validador_ingreso.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function (){
@@ -27,7 +28,7 @@ if (!defined('BASE_PATH')) {
 
 			try {
 				// El "await" espera la respuesta del servidor (es lo que permie el asincronico)
-				const respuesta = await fetch('../CONTROLADOR/ProcesaingresoUsuario.php', {
+				const respuesta = await fetch('<?= WEB_ROOT ?>CONTROLADOR/ProcesaingresoUsuario.php', {
 					method: 'POST',
 					body: datos
 				});
@@ -47,8 +48,8 @@ if (!defined('BASE_PATH')) {
     })
 </script>
 
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/formulario_estilos.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/index.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>VISTA/css/formulario_estilos.css">
 
 <title>Sing In</title>
 </head>
