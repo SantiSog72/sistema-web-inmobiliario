@@ -21,7 +21,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {//DOMContentLoaded: evento que se produce al cargar la pagina
-		const contenedor = document.getElementById('id_contenedor_catalogo');
+		const contenedor = document.getElementById('id_contenedor_catalogos');
 		cargo_cookies();
 
 		// 1. Función para obtener y mostrar datos
@@ -113,9 +113,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 	
 	<main>
 		
+		<h2 class="titulo_de_contenedor">mis inmuebles</h2>
 		<section class="section_catalogo">
-			<h2 class="titulo_de_contenedor">mis inmuebles</h2>
-			<div id="id_contenedor_catalogo" class="contenedor_catalogo">
+			<div id="id_contenedor_catalogos">
+				<h2 id="id_titulo_alquileres_realizados" class="titulo_de_contenedor"> Alquileres Realizados</h2>
+				<div id="id_contenedor_alquileres_realizados" class="contenedor_catalogo"></div>
+				<h2 id="id_titulo_alquileres_disponibles" class="titulo_de_contenedor"> Alquileres Disponibles</h2>
+				<div id="id_contenedor_alquileres_disponibles" class="contenedor_catalogo"></div>
+				<h2 id="id_titulo_ventas_disponibles" class="titulo_de_contenedor"> Ventas Disponibles</h2>
+				<div id="id_contenedor_ventas_disponibles" class="contenedor_catalogo"></div>
+				<h2 id="id_titulo_ventas_realizadas" class="titulo_de_contenedor"> Ventas Realizadas</h2>
+				<div id="id_contenedor_ventas_realizadas" class="contenedor_catalogo"></div>
 			</div>
 		</section>
 

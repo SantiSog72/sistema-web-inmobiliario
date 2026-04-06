@@ -266,6 +266,33 @@ class ConexionBDD {
         return $this->conexion->insert_id;
     }
 
+    public function ingresar_inquilino($nro_alquiler, $inquilino) {
+        $consulta = $this->conexion->prepare("
+            INSERT INTO inquilino 
+                (dni, nro_operacion, nombre, apellido, email, nro_celular)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        $contacto = $inquilino -> getContacto();
+
+        $dni = $inquilino -> getDni();
+        $nombre = $contacto -> get_nombre();
+        $apellido = $contacto -> get_apellido();
+        $nro_celular = $contacto -> getNro_celular();
+        $email = $contacto -> getEmail();
+
+        $consulta -> bind_param("sissss", 
+            $dni, $nro_alquiler, $nombre, $apellido, $email, $nro_celular
+        );
+
+        if ($consulta->execute()) {
+            $this -> set_disponibilidad_alquiler($nro_alquiler);
+            return true; 
+        } else {
+            return false;
+        }
+
+    }
+
     public function ingresar_opciones_financiacion($nro_operacion, $opciones) {
         $consulta = $this->conexion->prepare("
             INSERT INTO r_financiacion_venta (nro_operacion, cod_financiacion)
@@ -362,6 +389,28 @@ class ConexionBDD {
         $usuario = $resultado -> fetch_assoc();
         $resultado->free();
         return $usuario;
+    }
+
+    public function set_disponibilidad_alquiler ($nro_alquiler){
+        $consulta = $this -> conexion -> prepare("
+            UPDATE alquiler a
+            SET a.disponibilidad = 0
+            WHERE a.nro_operacion = ?
+        ");
+
+        $consulta -> bind_param("s", $nro_alquiler);
+        $consulta -> execute();
+    }
+
+    public function set_disponibilidad_venta ($nro_venta){
+        $consulta = $this -> conexion -> prepare("
+            UPDATE venta v
+            SET v.disponibilidad = 0
+            WHERE v.nro_operacion = ?
+        ");
+
+        $consulta -> bind_param("s", $nro_venta);
+        $consulta -> execute();
     }
 
 	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		

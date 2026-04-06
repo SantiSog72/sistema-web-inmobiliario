@@ -94,56 +94,117 @@ function renderizarMasInfo(item) {
     agregar_elemento_despues_de(htmlMasInfo, id_contenedor);
 }
 
-function renderizarMisTarjetasJSON(listaInmuebles) {
-    limpiar_contenedor('id_contenedor_catalogo');
 
+function renderizar_tarjeta_basica(item){
+    //crea las etiquetas basicas
+    let div = document.createElement("div");
+    div.setAttribute("id", `${item.id_operacion},${item.tipo}`);
+    div.setAttribute("class", "tarjeta_operacion");
+
+    let p = document.createElement("p");
+    p.innerHTML =  `${item.titulo} - <strong>${item.inmueble.ubicacion.zona}</strong> - ${item.tipo}: $${item.precio}`;
+
+    div.appendChild(p);
+    
+    return div;
+}
+
+function renderizar_misAlquileres(listaInmuebles){
+    limpiar_contenedor('id_contenedor_alquileres_realizados');
     if (listaInmuebles.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_alquileres_realizados');
+        return;
+    }
+    const contenedor = document.getElementById("id_contenedor_alquileres_realizados");
+    listaInmuebles.forEach(item =>{
+        let tarjeta = renderizar_tarjeta_basica(item);
+        let boton_gestion_pagos = crear_boton("boton_gestion_pagos",item, "gestion pagos");
+        tarjeta.appendChild(boton_gestion_pagos);
+
+        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
+        tarjeta.appendChild(boton_eliminar_publicacion);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+function renderizar_misVentas(listaInmuebles){
+    limpiar_contenedor('id_contenedor_ventas_realizadas');
+    const contenedor = document.getElementById("id_contenedor_ventas_realizadas");
+    if (listaInmuebles.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_ventas_realizadas');
+        return;
+    }
+    listaInmuebles.forEach(item =>{
+        let tarjeta = renderizar_tarjeta_basica(item);
+
+        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
+        tarjeta.appendChild(boton_eliminar_publicacion);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+function renderizar_misVentas_disponibles(listaInmuebles){
+    limpiar_contenedor('id_contenedor_ventas_disponibles');
+    const contenedor = document.getElementById("id_contenedor_ventas_disponibles");
+    if (listaInmuebles.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_ventas_disponibles');
+        return;
+    }
+    listaInmuebles.forEach(item =>{
+        let tarjeta = renderizar_tarjeta_basica(item);
+        boton_disponible = crear_boton("boton_vender",item, "vender");
+        tarjeta.appendChild(boton_disponible);
+
+        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
+        tarjeta.appendChild(boton_eliminar_publicacion);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+function renderizar_misAlquileres_disponibles(listaInmuebles){
+    limpiar_contenedor('id_contenedor_alquileres_disponibles');
+    if (listaInmuebles.length === 0) {
+        agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_alquileres_disponibles');
+        return;
+    }
+    const contenedor = document.getElementById("id_contenedor_alquileres_disponibles");
+    listaInmuebles.forEach(item =>{
+        let tarjeta = renderizar_tarjeta_basica(item);
+
+        let boton_disponible = crear_boton("boton_alquilar",item, "alquilar");
+        boton_disponible.onclick = function (){
+            //guardar el nro_operacion
+            localStorage.setItem("nro_operacion", item.id_operacion);
+            ir_registroInquilino();
+        };
+        tarjeta.appendChild(boton_disponible);
+        
+        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
+        tarjeta.appendChild(boton_eliminar_publicacion);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+function renderizarMisTarjetasJSON(listaInmuebles) {
+    
+    
+    if (listaInmuebles.length === 0) {
+        limpiar_contenedor('id_contenedor_catalogo');
         agregar_elemento_final("<p>No se encontraron resultados.</p>", 'id_contenedor_catalogo');
         return;
     }
 
-    // $lista_venta = listaInmuebles.filter(item => item.tipo === "Venta");
-    // $lista_alquiler = listaInmuebles.filter(item => item.tipo === "alquiler");
 
-    // Armar tarjeta vendidos
-    listaInmuebles.forEach(item => {
+    let lista_alquiler_disponible = listaInmuebles.filter(item => item.tipo === "Alquiler" && item.disponible);
+    let lista_alquiler_realizado = listaInmuebles.filter(item => item.tipo === "Alquiler" && !item.disponible);
+    let lista_venta_realizada = listaInmuebles.filter(item => item.tipo === "Venta" && !item.disponible);
+    let lista_venta_disponible = listaInmuebles.filter(item => item.tipo === "Venta" && item.disponible);
 
-        //contenedor de todo el catalogo
-        let contenedor_catalogo = document.getElementById("id_contenedor_catalogo");
+    renderizar_misAlquileres(lista_alquiler_realizado);
+    renderizar_misAlquileres_disponibles(lista_alquiler_disponible);
+    renderizar_misVentas(lista_venta_realizada);
+    renderizar_misVentas_disponibles(lista_venta_disponible);
 
-        //crea las etiquetas basicas
-        let div = document.createElement("div");
-        div.setAttribute("id", `${item.id_operacion},${item.tipo}`);
-        div.setAttribute("class", "tarjeta_operacion");
-
-        let p = document.createElement("p");
-        p.innerHTML =  `${item.titulo} - <strong>${item.inmueble.ubicacion.zona}</strong> - ${item.tipo}: $${item.precio}`;
-
-        div.appendChild(p);
-
-
-        //crea etiquetaas unicas
-        if (item.disponible){
-            if (item.tipo === "Alquiler"){
-                boton_disponible = crear_boton("boton_alquilar",item, "alquilar");
-            }else{
-                boton_disponible = crear_boton("boton_vender",item, "vender");
-            }
-            div.appendChild(boton_disponible);
-        }else{
-            if (item.tipo === "Alquiler"){
-                boton_gestion_pagos = crear_boton("boton_gestion_pagos",item, "gestion pagos");
-                div.appendChild(boton_gestion_pagos);
-            }
-        }
-
-        boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
-        div.appendChild(boton_eliminar_publicacion);
-        
-        
-        contenedor_catalogo.appendChild(div);
-
-    });
 }
 
 function crear_boton (clase, item, texto){
