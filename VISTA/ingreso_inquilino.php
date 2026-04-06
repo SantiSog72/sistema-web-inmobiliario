@@ -53,8 +53,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 			}
 		});
 
-
-
+		formulario.addEventListener('reset', async function(){
+			ir_gestionAdministrador();
+		})
 
 	});
 

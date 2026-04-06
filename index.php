@@ -128,8 +128,6 @@ require_once BASE_PATH . 'CONTROLADOR/ControladorCatalogo.class.php';
 		<button class= "boton" onclick="ocultarMapa()">Ocultar Mapa</button>
 	</nav>
 
-	<!-- <p id="id_visitas"></p>
-	<p id ="id_fecha_ultimo_acceso"></p> -->
 	</header>
 
 	<div id="id_mapa_div">

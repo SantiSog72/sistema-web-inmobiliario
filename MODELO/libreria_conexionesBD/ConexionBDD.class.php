@@ -371,10 +371,10 @@ class ConexionBDD {
     
     public function borrar_inmueble ($nro_inmueble){
         $consulta= $this -> conexion -> prepare("
-            DELETE FROM inmueble i WHERE i.nro_inmueble = ?
+            DELETE FROM inmueble WHERE nro_inmueble = ?
         ");
         $consulta -> bind_param('i',$nro_inmueble);
-        $consulta -> execute();
+        return $consulta -> execute();
     }
 
     public function obtener_usuario ($dni_usuario){

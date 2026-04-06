@@ -31,6 +31,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 				const respuesta = await fetch(url);
 				const lista_inmuebles = await respuesta.json();
 				localStorage.setItem("mi_catalogo", JSON.stringify(lista_inmuebles));
+
+				console.log(lista_inmuebles);
+				
 				renderizarMisTarjetasJSON(lista_inmuebles);
 			} catch (error) {
 				console.error("Error al cargar el catálogo:", error);
@@ -38,20 +41,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 			}
 		}
 
-		// async function cargarMensajes() {
-		// 	try {
-		// 		const respuesta = await fetch('../CONTROLADOR/ProcesaTraerMensajes.php');
-		// 		const lista_mensajes = await respuesta.json();
-		// 		//if hay no vistos
-		// 		if (lista_mensajes){
-		// 			renderizar_mensajesJSON (lista_mensajes);
-		// 		}else{
-		// 		}
-		// 	} catch (error) {
-		// 		console.error("Error al cargar los mensajes:", error);
-		// 		contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
-		// 	}
-		// }
 
 		async function cargarMensajes() {
 			try {
@@ -79,6 +68,40 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
 		cargarCatalogo(); 
 		cargarMensajes(); 
+
+		//botones eliminar
+		contenedor.addEventListener("click", async function(evento){
+			if (evento.target.classList.contains("boton_eliminar_publicacion")){
+				//obtener los nro y tipo del boton eliminar
+				const nro_inmueble = evento.target.getAttribute('data-id');
+				console.log (nro_inmueble);
+
+				if(!confirm("Esta seguro que desea eliminar la publicacion?")){return;}
+
+				//se deben agregar asi porque no hay formulario
+				const datos = new FormData();
+				datos.append('nro_inmueble', nro_inmueble);
+
+				try{
+					const respuesta = await fetch ('<?= WEB_ROOT ?>CONTROLADOR/ProcesaEliminarOperacion.php', {
+						method:'POST',
+						body:datos
+					});
+
+					const resultado = await respuesta.json();
+
+					if (resultado.exito){
+						alert(respuesta.mensaje);
+						cargarCatalogo(); 
+					}else{
+						alert("Error: "+ resultado.mensaje);
+					}
+				} catch(error){
+					console.error("Error en la conexión:", error);
+				}
+
+			}
+		});
 	});
 
 </script>

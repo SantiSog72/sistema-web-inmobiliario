@@ -177,6 +177,7 @@ function renderizar_misAlquileres_disponibles(listaInmuebles){
             localStorage.setItem("nro_operacion", item.id_operacion);
             ir_registroInquilino();
         };
+        
         tarjeta.appendChild(boton_disponible);
         
         boton_eliminar_publicacion = crear_boton("boton_eliminar_publicacion",item, "x");
@@ -211,7 +212,7 @@ function crear_boton (clase, item, texto){
     boton = document.createElement("button");
     boton.setAttribute("class",`boton ${clase}`);
     boton.setAttribute("type", "button");
-    boton.setAttribute("data-id", `${item.id_operacion},${item.tipo}`);
+    boton.setAttribute("data-id", `${item.inmueble.nro_inmueble}`);
     boton.textContent = `${texto}`;
     return boton;
 }
