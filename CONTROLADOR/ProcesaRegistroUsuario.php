@@ -8,45 +8,42 @@ $conexion = ConexionBDD::getInstancia();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
-    // Verificar que el DNI no esté repetido
-    if (!$conexion->obtener_usuario($_POST['dni'])){
-        $contacto = new Contacto(
-            $_POST['nombre'],
-            $_POST['apellido'],
-            $_POST['nro_celular'],
-            $_POST['email'],
-        );
-        $usuario = new UsuarioAdministrador(
-            $_POST['dni'],
-            $_POST['contrasena'],
-            $contacto
-        );
+    $contacto = new Contacto(
+        $_POST['nombre'],
+        $_POST['apellido'],
+        $_POST['nro_celular'],
+        $_POST['email'],
+    );
+    $usuario = new UsuarioAdministrador(
+        $_POST['dni'],
+        $_POST['contrasena'],
+        $contacto
+    );
 
-        try{
-            if ($conexion->ingresar_usuario($usuario)){
-            echo "<script>
-                alert('El usuario se registró con éxito');
-                window.location.href = '" . WEB_ROOT . "index.php';
-            </script>";
-            }else{
-                echo "paso otra cosa";
-            }
-
-        }catch(mysqli_sql_exception $e){
-            if (str_contains($e -> getMessage(), "Duplicate entry")){
-                echo "<script>
-                alert('El usuario ya se encuentra registrado en la base de datos');
-                window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
-                </script>";
-            }else{
-                echo "<script>
-                alert('El usuario no se pudo registrar');
-                window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
-                </script>";
-            }
+    try{
+        if ($conexion->ingresar_usuario($usuario)){
+        echo "<script>
+            alert('El usuario se registró con éxito');
+            window.location.href = '" . WEB_ROOT . "index.php';
+        </script>";
+        }else{
+            echo "<script>alert('paso otra cosa');<script>";
         }
+
+    }catch(mysqli_sql_exception $e){
+        if (str_contains($e -> getMessage(), "Duplicate entry")){
+            echo "<script>
+            alert('El usuario ya se encuentra registrado en la base de datos');
+            window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
+            </script>";
+        }else{
+            echo "<script>
+            alert('El usuario no se pudo registrar');
+            window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
+            </script>";
+        }
+    }
         
 
-    }
 }
 ?>

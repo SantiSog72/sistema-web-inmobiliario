@@ -180,11 +180,7 @@ class ConexionBDD {
             $email
         );
 
-        if ($consulta->execute()) {
-            return true; 
-        } else {
-            return false;
-        }
+        return $consulta->execute();
     }
 
     public function ingresar_inmueble($inmueble, $usr_dni) {
