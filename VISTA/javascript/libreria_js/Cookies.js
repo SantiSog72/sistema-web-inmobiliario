@@ -4,7 +4,6 @@ function setValorCookie(nombreCookie, valor, vigencia = 6000) {
 }
 
 function getValorCookie(nombreCookie) {
-    // Forma moderna y segura de obtener el valor
     let nombre = nombreCookie + "=";
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -34,7 +33,7 @@ function actualizarCookieVisita() {
 function actualizarCookieUltimoAcceso() {
     let fecha = new Date();
     let nombreCookie = "ultimo_acceso";
-    // Formateamos la fecha (mes +1 porque inicia en 0)
+    //(mes +1 porque inicia en 0)
     let aux = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()} ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}`;
     
     setValorCookie(nombreCookie, aux);

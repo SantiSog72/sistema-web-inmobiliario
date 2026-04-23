@@ -93,7 +93,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
                     <span class="form_grupo">
                         <label class="label" for="id_titulo_publicacion">Título Publicación: </label>                   
-                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación" value="titulo del departamento publicacion">
+                        <input id="id_titulo_publicacion" type="text" name="titulo_publicacion" placeholder="Ingrese el título de la publicación" value="">
                         <span id="error_titulo_publicacion" class="error"></span>
                     </span>
 
@@ -109,14 +109,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
                     
                     <span class="form_grupo">
                         <label class="label" for="id_precio">Precio: </label>                   
-                        <input id="id_precio" type="number" name="precio" placeholder="Ingrese el precio" value=12345678>
+                        <input id="id_precio" type="number" name="precio" placeholder="Ingrese el precio" value=>
                         <span id="error_precio" class="error"></span>
                     </span>
 
                     <!-- unicos de Alquiler -->
                     <span class="form_grupo">
                         <label class="label" for="id_plazo">Plazo (en meses): </label>                   
-                        <input id="id_plazo" type="number" name="plazo" placeholder="Ingrese el plazo en meses" value=24>
+                        <input id="id_plazo" type="number" name="plazo" placeholder="Ingrese el plazo en meses" value=>
                         <span id="error_plazo" class="error"></span>
                     </span>
 
@@ -152,8 +152,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
                     <span class="form_grupo">
                         <label class="label" for="id_descripcion_inmueble">Descripción: </label> 
-                        <textarea id="id_descripcion_inmueble" class="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4" >departamento 5 hoala como estas estso es una descripcion</textarea>                  
-                        <!-- <input id="id_descripcion_inmueble" type="text-area" name="descripcion_inmueble" maxlength="500" placeholder="Ingrese la descripción del inmueble"> -->
+                        <textarea id="id_descripcion_inmueble" class="textarea" name="descripcion_inmueble" maxlength="500" cols="100" rows="4" ></textarea>                  
                         <span id="error_descripcion_inmueble" class="error"></span>
                     </span>
 
@@ -189,14 +188,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 
                     <span class="form_grupo">
                         <label class="label" for="id_direccion">Direccion: </label>                   
-                        <input id="id_direccion" type="text" name="direccion_inmueble" placeholder="Ingrese la direccion del inmueble" value="calle 123">
+                        <input id="id_direccion" type="text" name="direccion_inmueble" placeholder="Ingrese la direccion del inmueble" value="">
                     <span id="error_direccion_inmueble" class="error"></span>
 
                     <span class="form_grupo">
                         <label class="label" for="id_coordenadas_longitud">coordenadas longitud: </label>                   
-                        <input id="id_coordenadas_longitud" type="text" name="coordenadas_longitud_inmueble" value ="123" placeholder="Ingrese la coordenadas_longitud del inmueble">
+                        <input id="id_coordenadas_longitud" type="text" name="coordenadas_longitud_inmueble" value ="" placeholder="Ingrese la coordenadas_longitud del inmueble">
                         <label class="label" for="id_coordenadas_latitud">coordenadas latitud: </label>                   
-                        <input id="id_coordenadas_latitud" type="text" name="coordenadas_latitud_inmueble" value="456" placeholder="Ingrese la coordenadas_latitud del inmueble">
+                        <input id="id_coordenadas_latitud" type="text" name="coordenadas_latitud_inmueble" value="" placeholder="Ingrese la coordenadas_latitud del inmueble">
                     <span id="error_coordenadas_inmueble" class="error"></span>
 
                 </fieldset>

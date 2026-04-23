@@ -413,39 +413,6 @@ class ConexionBDD {
         $consulta -> execute();
     }
 
-	// public function ingresarUsuario ($email, $contraseña, $nombre, $apellido, $sexo, $fecha_nacimiento, $nro_celular, $dni){		
-	// 	$query = "INSERT INTO usuario (email, contraseña, nombre, apellido, sexo, fecha_nacimiento, numero_celular, dni)";
-	// 	$query .= "VALUES ('".$email."','".$contraseña."','".$nombre."','".$apellido."','".$sexo."','".$fecha_nacimiento."','".$nro_celular."','".$dni."')";
-		
-	// 	try { 
-	// 		$this -> conexion -> query($query) or die ("el usuario no se pude registrar correctamente");
-	// 		echo "el usuario se registro con exito";
-	// 		// echo "<script> alert (\"el usuario se registro con exito\");</script>";
-	// 	}catch(mysqli_sql_exception $e){
-	// 		// echo $e -> getMessage();
-	// 		if (str_contains ($e -> getMessage(),"Duplicate entry")){//verificar si existe la cuenta en la BD con una excepcion
-	// 			echo "<script> alert (\"No se pudo registrar, ya existe una cuenta con ese email\");</script>";
-	// 		}else{
-	// 			echo "<script> alert (\"surgio un error inesperado\");</script>";
-	// 		}
-	// 	}
-	// }
-	
-	// //para las consultas que se hacen con datos ingresados del usuairo conviene utilizar consultas "preparadas"
-	// public function estaUsuario ($email){
-	// 	$consulta = $this -> conexion -> prepare ("SELECT COUNT(email) AS cantidad FROM usuario WHERE email = ?"); //prepara consulta
-	// 	$consulta -> bind_param ("s", $email); //relaciona $email con ? y le indica que es de tipo string (s)
-	// 	$consulta -> execute(); //ejecuta la consulta preparadas
-		
-	// 	$resultado = $consulta -> get_result();//obtiene el resultado de la consulta preparada
-		
-	// 	//resultado como array asociativo
-	// 	$array_resultado = $resultado -> fetch_array (MYSQLI_ASSOC);
-	// 	$resultado -> free();
-	// 	// echo $resultado -> num_rows; //obtiene el numero de filas
-	// 	return  ($array_resultado['cantidad'] > 0);
-	// }
-
     public function __destruct() {
         if ($this->conexion != null) {
             $this->conexion->close();

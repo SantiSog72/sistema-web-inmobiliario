@@ -71,8 +71,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 				
 					<span class="form_grupo">
 						<label class ="label" for ="id_contraseña">Contraseña: </label>
-						<input onblur ="" id ="id_contraseña"type="text" name="contrasena" maxlength="20" placeholder="ingrese su contraseña" value="12345678">
-						<input name="contraseña_encriptada" type="hidden" value="">
+						<input id ="id_contraseña" type="password" name="contrasena" maxlength="20" placeholder="ingrese su contraseña" value="12345678">
 						<span id="error_contraseña" class="error"></span>
 					</span>
 				</fieldset>

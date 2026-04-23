@@ -52,14 +52,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 					
 					<span class="form_grupo">
 						<label class ="label" for ="id_dni">DNI: </label>						
-						<input id ="id_dni" type="text" name="dni" placeholder="ingrese su dni" value="43480639">
+						<input id ="id_dni" type="text" name="dni" placeholder="ingrese su dni" value="">
 						<span id="error_dni" class="error"></span>
 					</span>
 
 					<span class="form_grupo">
 						<label class ="label" for ="id_contraseña">Nueva Contraseña: </label>
-						<input onblur ="" id ="id_contraseña"type="text" name="contrasena" maxlength="20" placeholder="ingrese su contraseña" value="Contrasena123">
-						<input name="contraseña_encriptada" type="hidden" value="">
+						<input onblur ="" id ="id_contraseña" type="password" name="contrasena" maxlength="20" placeholder="ingrese su contraseña" value="">
 						<span id="error_contraseña" class="error"></span>
 					</span>
 				</fieldset>
@@ -68,12 +67,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 					<legend class = "legend" >Ingreso Datos Personales</legend>
 					<span class="form_grupo">
 						<label class ="label" for ="id_nombre">nombre:</label>						
-						<input  onblur="" id ="id_nombre" type="text" name="nombre" maxlength="20" placeholder="ingrese su nombre" value ="santiago">
+						<input  onblur="" id ="id_nombre" type="text" name="nombre" maxlength="20" placeholder="ingrese su nombre" value ="">
 						<span id="error_nombre" class="error"></span>
 					</span>
 					<span class="form_grupo">
 						<label class ="label" for ="id_apellido">apellido:</label>						
-						<input onblur="" id ="id_apellido" type="text" name="apellido" maxlength="20" placeholder="ingrese su apellido" value="servin">
+						<input onblur="" id ="id_apellido" type="text" name="apellido" maxlength="20" placeholder="ingrese su apellido" value="">
 						<span id="error_apellido" class="error"></span>
 					</span>
 				</fieldset>
@@ -84,13 +83,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/sistema_web_inmobiliario/config.php';
 					
 					<span class="form_grupo">
                         <label class ="label" for ="id_email">email: </label>						
-						<input id ="id_email"type="text" name="email" placeholder="ingrese su email" value="santiago@servin.com">
+						<input id ="id_email"type="text" name="email" placeholder="ingrese su email" value="">
 						<span id="error_email" class="error"></span>
 					</span>
                     
                     <span class="form_grupo">
                         <label class ="label" for ="id_numero_cel">numero celular</label>						
-                        <input id ="id_numero_cel" type="text" name="nro_celular" placeholder= "ingrese numero celular" value="12345678">
+                        <input id ="id_numero_cel" type="text" name="nro_celular" placeholder= "ingrese numero celular" value="">
                         <span id="error_numero_cel" class="error"></span>
                     </span>
                 </fieldset>

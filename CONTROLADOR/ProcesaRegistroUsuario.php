@@ -22,23 +22,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $contacto
         );
 
-        if ($conexion->ingresar_usuario($usuario)){
+        try{
+            if ($conexion->ingresar_usuario($usuario)){
             echo "<script>
                 alert('El usuario se registró con éxito');
                 window.location.href = '" . WEB_ROOT . "index.php';
             </script>";
-        } else {
-            echo "<script>
+            }else{
+                echo "paso otra cosa";
+            }
+
+        }catch(mysqli_sql_exception $e){
+            if (str_contains($e -> getMessage(), "Duplicate entry")){
+                echo "<script>
+                alert('El usuario ya se encuentra registrado en la base de datos');
+                window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
+                </script>";
+            }else{
+                echo "<script>
                 alert('El usuario no se pudo registrar');
                 window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
-            </script>";
+                </script>";
+            }
         }
+        
 
-    } else {
-        echo "<script>
-            alert('El usuario ya estaba registrado en la base de datos');
-            window.location.href = '" . WEB_ROOT . "VISTA/singUp.php';
-        </script>";
     }
 }
 ?>

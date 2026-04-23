@@ -22,16 +22,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     );
 
     $json_respuesta = [];
-    if ($conexion -> ingresar_inquilino($nro_operacion, $inquilino)){
-        $json_respuesta = [
-            "exito" => true,
-            "mensaje" => "El inquilino se registro correctamente"
-        ];
-    }else{
+    try {
+        if ($conexion -> ingresar_inquilino($nro_operacion, $inquilino)){
+            $json_respuesta = [
+                "exito" => true,
+                "mensaje" => "El inquilino se registro correctamente"
+            ];
+        }else{
+            $json_respuesta = [
+                "exito" => false,
+                "mensaje" => "No se pudo registrar el inquilino"
+            ];
+        }
+
+    }catch(PDOException $e){
+
         $json_respuesta = [
             "exito" => false,
-            "mensaje" => "No se pudo registrar el inquilino"
+            "mensaje" => "El dni del inquilino ya estaba registrado"
         ];
+        header('Content-Type: application/json');
+        echo json_encode($json_respuesta);
+        exit;
+
     }
 
     header('Content-Type: application/json');
